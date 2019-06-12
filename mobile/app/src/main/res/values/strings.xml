@@ -1,0 +1,22 @@
+<resources>
+    <string name="shr_app_name">Gymity</string>
+    <string name="shr_hint_username">Username</string>
+    <string name="shr_hint_full_name">Full name</string>
+    <string name="shr_hint_password">Password</string>
+    <string name="shr_hint_confirm_password">Confirm password</string>
+    <string name="shr_button_next">Next</string>
+    <string name="shr_button_register">Register</string>
+    <string name="shr_error_password">Password is incorrect.</string>
+    <string name="shr_filter_title">Filter</string>
+    <string name="shr_search_title">Search</string>
+    <string name="shr_product_title">Title</string>
+    <string name="shr_product_description">Secondary text</string>
+    <string name="shr_incorrect_credentials">Incorrect credentials</string>
+    <string name="shr_register">Register</string>
+
+    <!-- Shrine backdrop menu labels -->
+    <string name="shr_gyms">Gyms</string>
+    <string name="shr_offers">Offers</string>
+    <string name="shr_notifications">Notifications</string>
+    <string name="shr_my_account">My account</string>
+</resources>
