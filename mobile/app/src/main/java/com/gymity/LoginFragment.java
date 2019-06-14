@@ -45,7 +45,7 @@ public class LoginFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((passwordEditText.getText()).length() < 0)
+                if (!isPasswordValid(passwordEditText.getText()))
                 {
                     passwordTextInput.setError(getString(R.string.shr_incorrect_credentials));
                 } else{

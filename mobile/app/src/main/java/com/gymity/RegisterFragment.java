@@ -9,128 +9,92 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class RegisterFragment extends Fragment {
 
+    private TextInputEditText passwordEditText;
+    private MaterialButton nextButton;
+    private TextInputEditText usernameEditText;
+    private TextInputLayout passwordTextInput;
+    private TextInputLayout usernameTextInput;
+    private TextInputEditText fullNameEditText;
+    private TextInputLayout fullNameTextInput;
     private MaterialButton registerButton;
 
-    private TextInputEditText passwordInput;
-    private TextInputEditText usernameInput;
-    private TextInputEditText fullNameInput;
-
-    private TextInputLayout usernameLayout;
-    private TextInputLayout passwordLayout;
-    private TextInputLayout fullNameLayout;
-
-    Map<String, String> errors = new HashMap<>();
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.shr_register, container, false);
+    public View onCreateView(
+            @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.shr_register, container, false);
 
+        usernameEditText = view.findViewById(R.id.username_edit_text);
+        usernameTextInput = view.findViewById(R.id.username_text_input);
+        passwordTextInput = view.findViewById(R.id.password_text_input);
+        passwordEditText = view.findViewById(R.id.password_edit_text);
+        fullNameEditText = view.findViewById(R.id.fullName_edit_text);
+        fullNameTextInput = view.findViewById(R.id.fullName_text_input);
+        nextButton = view.findViewById(R.id.next_button);
         registerButton = view.findViewById(R.id.register_button);
 
-        passwordInput = view.findViewById(R.id.register_password);
-        usernameInput = view.findViewById(R.id.register_username);
-        fullNameInput = view.findViewById(R.id.register_full_name);
-
-        usernameLayout = view.findViewById(R.id.username_text_input);
-        passwordLayout = view.findViewById(R.id.password_text_input);
-        fullNameLayout = view.findViewById(R.id.full_name_text_input);
-
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!formIsValid()) {
-                    fillErrorFields();
+                if (!formIsValid(fullNameEditText.getText(), usernameEditText.getText(), passwordEditText.getText())) {
+                    fillErrorFields(fullNameEditText.getText(), usernameEditText.getText(), passwordEditText.getText());
                 } else {
+                    clearErrorFields();
                     ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
                 }
             }
         });
 
-        fullNameInput.setOnKeyListener(new View.OnKeyListener() {
+        passwordEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isFieldValid(fullNameInput.getText())) {
-                    errors.remove("fullName");
-                    fullNameLayout.setError(null);
-                }
+                if (isPasswordValid(passwordEditText.getText()))
+                    passwordTextInput.setError(null);
+                else
+                    passwordTextInput.setError("Password must be longer than 6 characters");
                 return false;
             }
         });
 
-        usernameInput.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isFieldValid(usernameInput.getText())) {
-                    errors.remove("username");
-                    usernameLayout.setError(null);
-                }
-                return false;
-            }
-        });
 
-        passwordInput.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isFieldValid(passwordInput.getText())){
-                    errors.remove("password");
-                    passwordLayout.setError(null);
-                }
-                return false;
-            }
-        });
-
-        setUpToolbar(view);
         return view;
     }
 
-    public boolean formIsValid() {
-        if (usernameInput.getText().length() == 0)
-            errors.put("username", "Username can't be empty");
-
-        if (passwordInput.getText().length() == 0)
-            errors.put("password", "Password can't be empty");
-
-        if(fullNameInput.getText().length() == 0)
-            errors.put("fullName", "Full name can't be empty");
-
-        return errors.isEmpty();
+    public boolean formIsValid(@Nullable Editable fullName, @Nullable Editable username, @Nullable Editable password) {
+        return isFieldValid(fullName) && isFieldValid(username) && isPasswordValid(password);
     }
 
-    public void fillErrorFields(){
-        if(errors.containsKey("username"))
-            usernameLayout.setError(errors.get("username"));
-        if(errors.containsKey("password"))
-            passwordLayout.setError(errors.get("password"));
-        if(errors.containsKey("fullName"))
-            fullNameLayout.setError(errors.get("fullName"));
+    public boolean isPasswordValid(@Nullable Editable password) {
+        return password.length() > 5;
     }
 
     public boolean isFieldValid(@Nullable Editable field) {
         return field.length() > 0;
     }
 
+    public void fillErrorFields(@Nullable Editable fullName, @Nullable Editable username, @Nullable Editable password) {
+        clearErrorFields();
 
-    private void setUpToolbar(View view) {
-        Toolbar toolbar = view.findViewById(R.id.app_bar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null) {
-            activity.setSupportActionBar(toolbar);
-        }
+        if (!isPasswordValid(password))
+            passwordTextInput.setError("Password must be longer than 6 characters");
+        if (!isFieldValid(username))
+            usernameTextInput.setError("Username can't be empty");
+        if (!isFieldValid(fullName))
+            fullNameTextInput.setError("Full name can't be empty");
+
     }
 
-
+    public void clearErrorFields() {
+        passwordTextInput.setError(null);
+        usernameTextInput.setError(null);
+        fullNameTextInput.setError(null);
+    }
 }
+
