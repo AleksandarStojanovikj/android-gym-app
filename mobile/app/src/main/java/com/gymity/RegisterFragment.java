@@ -1,6 +1,8 @@
 package com.gymity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +24,13 @@ public class RegisterFragment extends Fragment {
 
     private MaterialButton registerButton;
 
-    private TextInputEditText confirmPasswordInput;
     private TextInputEditText passwordInput;
     private TextInputEditText usernameInput;
     private TextInputEditText fullNameInput;
 
-    private TextInputLayout usernamerLayout;
+    private TextInputLayout usernameLayout;
     private TextInputLayout passwordLayout;
     private TextInputLayout fullNameLayout;
-    private TextInputLayout confirmPasswordLayout;
 
     Map<String, String> errors = new HashMap<>();
 
@@ -41,22 +41,55 @@ public class RegisterFragment extends Fragment {
 
         registerButton = view.findViewById(R.id.register_button);
 
-        confirmPasswordInput = view.findViewById(R.id.register_confirm_password);
         passwordInput = view.findViewById(R.id.register_password);
         usernameInput = view.findViewById(R.id.register_username);
         fullNameInput = view.findViewById(R.id.register_full_name);
 
-        usernamerLayout = view.findViewById(R.id.username_text_input);
+        usernameLayout = view.findViewById(R.id.username_text_input);
         passwordLayout = view.findViewById(R.id.password_text_input);
-        confirmPasswordLayout = view.findViewById(R.id.confirm_password_text_input);
         fullNameLayout = view.findViewById(R.id.full_name_text_input);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(formIsValid()){
+                if (!formIsValid()) {
+                    fillErrorFields();
+                } else {
                     ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
                 }
+            }
+        });
+
+        fullNameInput.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(isFieldValid(fullNameInput.getText())) {
+                    errors.remove("fullName");
+                    fullNameLayout.setError(null);
+                }
+                return false;
+            }
+        });
+
+        usernameInput.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(isFieldValid(usernameInput.getText())) {
+                    errors.remove("username");
+                    usernameLayout.setError(null);
+                }
+                return false;
+            }
+        });
+
+        passwordInput.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(isFieldValid(passwordInput.getText())){
+                    errors.remove("password");
+                    passwordLayout.setError(null);
+                }
+                return false;
             }
         });
 
@@ -64,12 +97,32 @@ public class RegisterFragment extends Fragment {
         return view;
     }
 
-    public boolean formIsValid(){
-        if(this.usernameInput.getText().length() == 0){
+    public boolean formIsValid() {
+        if (usernameInput.getText().length() == 0)
             errors.put("username", "Username can't be empty");
-        }
-        return true;
+
+        if (passwordInput.getText().length() == 0)
+            errors.put("password", "Password can't be empty");
+
+        if(fullNameInput.getText().length() == 0)
+            errors.put("fullName", "Full name can't be empty");
+
+        return errors.isEmpty();
     }
+
+    public void fillErrorFields(){
+        if(errors.containsKey("username"))
+            usernameLayout.setError(errors.get("username"));
+        if(errors.containsKey("password"))
+            passwordLayout.setError(errors.get("password"));
+        if(errors.containsKey("fullName"))
+            fullNameLayout.setError(errors.get("fullName"));
+    }
+
+    public boolean isFieldValid(@Nullable Editable field) {
+        return field.length() > 0;
+    }
+
 
     private void setUpToolbar(View view) {
         Toolbar toolbar = view.findViewById(R.id.app_bar);
@@ -78,5 +131,6 @@ public class RegisterFragment extends Fragment {
             activity.setSupportActionBar(toolbar);
         }
     }
+
 
 }
