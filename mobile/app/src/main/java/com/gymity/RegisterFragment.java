@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
@@ -30,6 +32,7 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.shr_register, container, false);
+//        setUpToolbar(view);
 
         usernameEditText = view.findViewById(R.id.username_edit_text);
         usernameTextInput = view.findViewById(R.id.username_text_input);
@@ -65,6 +68,14 @@ public class RegisterFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void setUpToolbar(View view) {
+        Toolbar toolbar = view.findViewById(R.id.app_register_bar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity != null) {
+            activity.setSupportActionBar(toolbar);
+        }
     }
 
     public boolean formIsValid(@Nullable Editable fullName, @Nullable Editable username, @Nullable Editable password) {

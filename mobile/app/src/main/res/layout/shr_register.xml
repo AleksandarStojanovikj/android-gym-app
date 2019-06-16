@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/loginPageBackgroundColor"
-    tools:context="com.gymity.LoginFragment">
+    tools:context="com.gymity.RegisterFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             app:elevation="0dp">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/app_bar"
+                android:id="@+id/app_register_bar"
                 style="@style/Widget.Shrine.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
