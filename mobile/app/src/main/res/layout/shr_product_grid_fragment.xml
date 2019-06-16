@@ -32,6 +32,12 @@
             app:navigationIcon="@drawable/shr_menu"
             app:title="@string/shr_app_name" />
 
+      <!--  <android.support.v7.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/SearchViewTheme" />-->
+
     </com.google.android.material.appbar.AppBarLayout>
 
    <androidx.core.widget.NestedScrollView
