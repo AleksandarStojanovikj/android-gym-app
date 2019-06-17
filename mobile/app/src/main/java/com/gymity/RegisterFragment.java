@@ -67,7 +67,11 @@ public class RegisterFragment extends Fragment {
                     call.enqueue(new Callback<Users>() {
                         @Override
                         public void onResponse(Call<Users> call, Response<Users> response) {
-                            ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
+                            if (response.code() == 200) {
+                                ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
+                            } else
+                                Toast.makeText(getContext(), "Username is taken", Toast.LENGTH_SHORT).show();
+
                         }
 
                         @Override

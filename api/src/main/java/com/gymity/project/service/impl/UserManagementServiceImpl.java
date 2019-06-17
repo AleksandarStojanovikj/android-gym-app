@@ -21,7 +21,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public void register(Users user) throws UserAlreadyExists {
-        if (userRepository.findByCredentials(user.credentials) != null)
+        if (userRepository.findByCredentialsUsername(user.credentials.username) != null)
             throw new UserAlreadyExists();
         userRepository.save(user);
         user.login();
