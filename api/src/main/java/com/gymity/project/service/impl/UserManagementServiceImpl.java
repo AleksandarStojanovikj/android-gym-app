@@ -28,12 +28,14 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
-    public void login(Credentials credentials) throws InvalidCredentials, UserDoesNotExist {
-        if(userRepository.findByCredentialsUsername(credentials.username) == null)
+    public Users login(Credentials credentials) throws InvalidCredentials, UserDoesNotExist {
+        if (userRepository.findByCredentialsUsername(credentials.username) == null)
             throw new UserDoesNotExist();
-        if(userRepository.findByCredentials(credentials) == null)
+        if (userRepository.findByCredentials(credentials) == null)
             throw new InvalidCredentials();
 
-        userRepository.findByCredentials(credentials).login();
+        Users user = userRepository.findByCredentials(credentials);
+        user.login();
+        return user;
     }
 }

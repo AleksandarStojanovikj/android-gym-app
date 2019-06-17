@@ -14,11 +14,11 @@ public class Users {
 
     public String fullName;
 
-    public UID accessToken;
+    public String accessToken;
 
     public boolean isAdmin;
 
     public void login() {
-        this.accessToken = new UID();
+        this.accessToken = new UID().toString();
     }
 }

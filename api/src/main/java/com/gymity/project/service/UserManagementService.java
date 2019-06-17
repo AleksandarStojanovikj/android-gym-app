@@ -8,5 +8,5 @@ import com.gymity.project.model.Users;
 
 public interface UserManagementService {
     void register(Users user) throws UserAlreadyExists;
-    void login(Credentials credentials) throws InvalidCredentials, UserDoesNotExist;
+    Users login(Credentials credentials) throws InvalidCredentials, UserDoesNotExist;
 }
