@@ -1,17 +1,15 @@
 package com.gymity.persistance.dao;
 
-import com.gymity.model.User;
-
-import java.util.List;
-
 import androidx.room.Dao;
 import androidx.room.Query;
 
+import com.gymity.model.Users;
+
+import java.util.List;
+
 @Dao
 public interface UserDao {
-    @Query("SELECT * FROM user")
-    List<User> getAll();
+    @Query("SELECT * FROM Users")
+    List<Users> getAll();
 
-    @Query("SELECT * FROM user WHERE username=:username")
-    User findByUsername(String username);
 }

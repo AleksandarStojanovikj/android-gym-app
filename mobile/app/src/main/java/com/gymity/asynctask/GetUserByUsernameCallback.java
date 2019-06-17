@@ -1,7 +1,7 @@
 package com.gymity.asynctask;
 
-import com.gymity.model.User;
+import com.gymity.model.Users;
 
 public interface GetUserByUsernameCallback {
-    void onLoaded(User user);
+    void onLoaded(Users user);
 }

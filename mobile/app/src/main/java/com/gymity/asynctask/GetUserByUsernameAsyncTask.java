@@ -3,12 +3,12 @@ package com.gymity.asynctask;
 import android.app.Activity;
 import android.os.AsyncTask;
 
-import com.gymity.model.User;
+import com.gymity.model.Users;
 import com.gymity.persistance.dao.UserDao;
 
 import java.lang.ref.WeakReference;
 
-public class GetUserByUsernameAsyncTask extends AsyncTask<String, Void, User> {
+public abstract class GetUserByUsernameAsyncTask extends AsyncTask<String, Void, Users> {
     private WeakReference<Activity> weakActivity;
     private String username;
     private String password;
@@ -21,13 +21,9 @@ public class GetUserByUsernameAsyncTask extends AsyncTask<String, Void, User> {
         this.userDao = userDao;
     }
 
-    @Override
-    protected User doInBackground(String... strings) {
-        return userDao.findByUsername(username);
-    }
 
     @Override
-    protected void onPostExecute(User user) {
+    protected void onPostExecute(Users user) {
         Activity activity = weakActivity.get();
         if (activity == null) {
             return;

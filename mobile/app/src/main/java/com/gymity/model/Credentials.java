@@ -9,5 +9,4 @@ public class Credentials {
         this.password = password;
     }
 
-    public Credentials(){}
 }

@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,14 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.gymity.clients.GymApiClient;
+import com.gymity.model.Credentials;
+import com.gymity.model.Users;
+import com.gymity.repository.UserClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterFragment extends Fragment {
 
@@ -27,6 +36,7 @@ public class RegisterFragment extends Fragment {
     private TextInputEditText fullNameEditText;
     private TextInputLayout fullNameTextInput;
     private MaterialButton registerButton;
+    private UserClient userClient;
 
     @Override
     public View onCreateView(
@@ -46,11 +56,26 @@ public class RegisterFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!formIsValid(fullNameEditText.getText(), usernameEditText.getText(), passwordEditText.getText())) {
                     fillErrorFields(fullNameEditText.getText(), usernameEditText.getText(), passwordEditText.getText());
                 } else {
                     clearErrorFields();
-                    ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
+                    userClient = GymApiClient.getRetrofitInstance().create(UserClient.class);
+                    Call<Users> call = userClient.registerUser(new Users(new Credentials(usernameEditText.getText().toString(), passwordEditText.getText().toString()), fullNameEditText.getText().toString()));
+
+                    call.enqueue(new Callback<Users>() {
+                        @Override
+                        public void onResponse(Call<Users> call, Response<Users> response) {
+                            ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Users> call, Throwable t) {
+                            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
             }
         });

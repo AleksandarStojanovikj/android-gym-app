@@ -2,8 +2,6 @@ package com.gymity.persistance;
 
 import android.content.Context;
 
-import com.gymity.model.User;
-
 import androidx.room.Room;
 
 public class UserRepository {
@@ -18,7 +16,4 @@ public class UserRepository {
         }
     }
 
-    public User getUserByUsername(final String username){
-        return userDatabase.userDao().findByUsername(username);
-    }
 }

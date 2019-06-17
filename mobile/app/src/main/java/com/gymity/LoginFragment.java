@@ -17,7 +17,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.gymity.clients.GymApiClient;
 import com.gymity.model.Credentials;
-import com.gymity.model.User;
+import com.gymity.model.Users;
 import com.gymity.persistance.UserRepository;
 import com.gymity.repository.UserClient;
 import com.gymity.viewmodels.UserViewModel;
@@ -49,18 +49,14 @@ public class LoginFragment extends Fragment {
         nextButton = view.findViewById(R.id.next_button);
         registerButton = view.findViewById(R.id.register_button);
 
-        /*userRepository = new UserClient(getActivity());
-        userViewModel = new ViewModelProviders().of(getActivity()).get(UserViewModel.class);
-        final User landingUser = userRepository.getUserByUsername(usernameEditText.getText().toString());*/
-
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 userClient = GymApiClient.getRetrofitInstance().create(UserClient.class);
-                Call<User> call = userClient.loginUser(new Credentials(usernameEditText.getText().toString(), passwordEditText.getText().toString()));
-                call.enqueue(new Callback<User>() {
+                Call<Users> call = userClient.loginUser(new Credentials(usernameEditText.getText().toString(), passwordEditText.getText().toString()));
+                call.enqueue(new Callback<Users>() {
                     @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
+                    public void onResponse(Call<Users> call, Response<Users> response) {
                         if (response.code() == 200) {
                             ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
                         } else
@@ -68,7 +64,7 @@ public class LoginFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<User> call, Throwable t) {
+                    public void onFailure(Call<Users> call, Throwable t) {
                         Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 });

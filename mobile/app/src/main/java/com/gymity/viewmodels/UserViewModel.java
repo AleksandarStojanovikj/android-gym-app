@@ -2,7 +2,7 @@ package com.gymity.viewmodels;
 
 import android.app.Application;
 
-import com.gymity.model.User;
+import com.gymity.model.Users;
 import com.gymity.persistance.UserRepository;
 
 import androidx.annotation.NonNull;
@@ -11,7 +11,7 @@ import androidx.lifecycle.LiveData;
 
 public class UserViewModel extends AndroidViewModel {
 
-    private LiveData<User> user;
+    private LiveData<Users> user;
     private UserRepository userRepository = null;
 
     public UserViewModel(@NonNull Application application, String username) {
@@ -20,7 +20,7 @@ public class UserViewModel extends AndroidViewModel {
 //        user = userRepository.getUserByUsername(username);
     }
 
-    public LiveData<User> getUserByUsername(String username){
+    public LiveData<Users> getUserByUsername(String username){
         return user;
     }
 }
