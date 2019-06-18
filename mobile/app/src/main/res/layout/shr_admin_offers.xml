@@ -20,7 +20,7 @@
             app:elevation="0dp">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/app_register_bar"
+                android:id="@+id/app_admin_bar"
                 style="@style/Widget.Shrine.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -142,6 +142,11 @@
                 android:text="Add offer" />
 
         </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </ScrollView>

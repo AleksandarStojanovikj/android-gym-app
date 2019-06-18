@@ -61,7 +61,8 @@ public class LoginFragment extends Fragment {
                         if (response.code() == 200) {
                             if (response.body().isAdmin)
                                 ((NavigationHost) getActivity()).navigateTo(new AdminProductGridFragment(), false);
-                            ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
+                            else
+                                ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
                         } else
                             Toast.makeText(getContext(), "Incorrect credentials", Toast.LENGTH_SHORT).show();
                     }
