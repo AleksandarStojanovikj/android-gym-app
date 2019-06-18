@@ -16,6 +16,9 @@ public class Users {
     @ColumnInfo
     public String fullName;
 
+    @ColumnInfo
+    public boolean isAdmin;
+
     public Users(Credentials credentials, String fullName){
         this.credentials = credentials;
         this.fullName = fullName;

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.gymity.admin.AdminProductGridFragment;
 import com.gymity.clients.GymApiClient;
 import com.gymity.model.Credentials;
 import com.gymity.model.Users;
@@ -58,6 +59,8 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onResponse(Call<Users> call, Response<Users> response) {
                         if (response.code() == 200) {
+                            if (response.body().isAdmin)
+                                ((NavigationHost) getActivity()).navigateTo(new AdminProductGridFragment(), false);
                             ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
                         } else
                             Toast.makeText(getContext(), "Incorrect credentials", Toast.LENGTH_SHORT).show();
