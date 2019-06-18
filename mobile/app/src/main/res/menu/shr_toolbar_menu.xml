@@ -6,11 +6,7 @@
         android:icon="@drawable/shr_search"
         android:title="@string/shr_search_title"
         app:showAsAction="always" />
-   <!-- <item
-        android:id="@+id/m_search"
-        android:icon="@drawable/shr_search"
-        android:title="@string/shr_search_title"
-        app:showAsAction="ifRoom|collapseActionView" />-->
+
     <item
         android:id="@+id/filter"
         android:icon="@drawable/shr_filter"

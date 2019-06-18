@@ -21,7 +21,7 @@ public class ProductCardRecyclerViewAdapter extends RecyclerView.Adapter<Product
     private ImageRequester imageRequester;
     private int screenWidth = 0;
 
-    ProductCardRecyclerViewAdapter(List<ProductEntry> productList) {
+    public ProductCardRecyclerViewAdapter(List<ProductEntry> productList) {
         this.productList = productList;
         imageRequester = ImageRequester.getInstance();
     }

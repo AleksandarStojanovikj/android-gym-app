@@ -6,21 +6,21 @@
         android:id="@+id/gyms_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/shr_gyms" />
+        android:text="Add gym" />
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.Shrine.Button.TextButton"
         android:id="@+id/offers_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/shr_offers" />
+        android:text="Add offer" />
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.Shrine.Button.TextButton"
         android:id="@+id/notifications_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/shr_notifications" />
+        android:text="Send out notification" />
 
     <View
         android:layout_width="56dp"
@@ -30,9 +30,9 @@
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.Shrine.Button.TextButton"
-        android:id="@+id/my_account_button"
+        android:id="@+id/users_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/shr_my_account" />
+        android:text="View users" />
 
 </merge>
