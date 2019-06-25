@@ -2,9 +2,10 @@ package com.gymity.project.model;
 
 import javax.persistence.*;
 import java.rmi.server.UID;
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "user")
+@Entity(name = "users")
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,9 +17,8 @@ public class Users {
     @OneToMany(mappedBy = "user")
     public List<TakenOffer> myOffers;
 
-    @ManyToMany
-    @JoinTable(name = "gym", joinColumns = @JoinColumn(name = "gym_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"))
-    public List<Gym> myGyms;
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Membership> memberships;
 
     public String fullName;
     public String accessToken;

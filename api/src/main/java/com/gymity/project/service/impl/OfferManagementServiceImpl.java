@@ -8,6 +8,8 @@ import com.gymity.project.service.OfferManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OfferManagementServiceImpl implements OfferManagementService {
     private final GymsRepository gymsRepository;
@@ -22,9 +24,15 @@ public class OfferManagementServiceImpl implements OfferManagementService {
 
     @Override
     public void addOffer(Offer offer) throws GymDoesNotExist {
-        if(gymsRepository.findByName(offer.gym.name) == null)
+        if (gymsRepository.findByName(offer.gym.name) == null)
             throw new GymDoesNotExist();
 
+        offer.gym = gymsRepository.findByName(offer.gym.name);
         offersRepository.save(offer);
+    }
+
+    @Override
+    public List<Offer> getAllOffers() {
+        return offersRepository.findAll();
     }
 }

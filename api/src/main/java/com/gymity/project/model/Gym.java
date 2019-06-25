@@ -9,10 +9,10 @@ public class Gym {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Long id;
 
-    @ManyToMany(mappedBy = "myGyms")
-    public List<Users> users;
+    @OneToMany(mappedBy = "gym", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Membership> memberships;
 
-    @OneToMany(mappedBy = "gym")
+    @OneToMany(mappedBy = "gym", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Offer> offers;
 
     public String name;
