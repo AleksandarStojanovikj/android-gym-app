@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,10 +20,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.gymity.NavigationHost;
 import com.gymity.NavigationIconClickListener;
-import com.gymity.ProductCardRecyclerViewAdapter;
 import com.gymity.ProductGridItemDecoration;
 import com.gymity.R;
-import com.gymity.network.ProductEntry;
+import com.gymity.adapters.OfferCardRecyclerViewAdapter;
+import com.gymity.clients.GymApiClient;
+import com.gymity.model.OfferDto;
+import com.gymity.repository.OfferClient;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AdminProductGridFragment extends Fragment {
     @Override
@@ -36,37 +45,39 @@ public class AdminProductGridFragment extends Fragment {
     private MaterialButton notificationsButton;
     private MaterialButton usersButton;
 
+    private OfferClient offerClient;
+    private List<OfferDto> offers;
+
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.shr_admin_product_grid, container, false);
+        final View view = inflater.inflate(R.layout.shr_admin_product_grid, container, false);
         setUpToolbar(view);
+
+        offerClient = GymApiClient.getRetrofitInstance().create(OfferClient.class);
+        Call<List<OfferDto>> call = offerClient.getOffers();
+        call.enqueue(new Callback<List<OfferDto>>() {
+            @Override
+            public void onResponse(Call<List<OfferDto>> call, Response<List<OfferDto>> response) {
+                if (response.code() >= 200 && response.code() < 300) {
+                    offers = response.body();
+                    setUpRecyclerView(view);
+                } else
+                    Toast.makeText(getContext(), "No offers available", Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void onFailure(Call<List<OfferDto>> call, Throwable t) {
+                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT);
+            }
+        });
 
         gymButton = view.findViewById(R.id.gyms_button);
         offersButton = view.findViewById(R.id.offers_button);
         notificationsButton = view.findViewById(R.id.notifications_button);
         usersButton = view.findViewById(R.id.users_button);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return 1;
-            }
-        });
-        recyclerView.setLayoutManager(gridLayoutManager);
-
-        ProductCardRecyclerViewAdapter adapter = new ProductCardRecyclerViewAdapter(ProductEntry.initProductEntryList(getResources()));
-        recyclerView.setAdapter(adapter);
-        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_staggered_product_grid_spacing_small);
-        recyclerView.addItemDecoration(new ProductGridItemDecoration(smallPadding, smallPadding));
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            view.findViewById(R.id.product_grid).setBackgroundResource(R.drawable.shr_product_grid_background_shape);
-        }
 
         gymButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +107,28 @@ public class AdminProductGridFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    public void setUpRecyclerView(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_offers);
+        recyclerView.setHasFixedSize(true);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return 1;
+            }
+        });
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        OfferCardRecyclerViewAdapter adapter = new OfferCardRecyclerViewAdapter(offers);
+        recyclerView.setAdapter(adapter);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_staggered_product_grid_spacing_small);
+        recyclerView.addItemDecoration(new ProductGridItemDecoration(smallPadding, smallPadding));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.product_grid).setBackgroundResource(R.drawable.shr_product_grid_background_shape);
+        }
     }
 
     private void setUpToolbar(View view) {
