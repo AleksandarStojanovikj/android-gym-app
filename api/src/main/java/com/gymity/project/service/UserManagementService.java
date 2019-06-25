@@ -6,7 +6,10 @@ import com.gymity.project.exceptions.UserDoesNotExist;
 import com.gymity.project.model.Credentials;
 import com.gymity.project.model.Users;
 
+import java.util.ArrayList;
+
 public interface UserManagementService {
     void register(Users user) throws UserAlreadyExists;
     Users login(Credentials credentials) throws InvalidCredentials, UserDoesNotExist;
+    ArrayList<Users> getAllUsers();
 }

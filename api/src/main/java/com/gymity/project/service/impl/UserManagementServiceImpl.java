@@ -10,6 +10,8 @@ import com.gymity.project.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
     private final UserRepository userRepository;
@@ -38,4 +40,10 @@ public class UserManagementServiceImpl implements UserManagementService {
         user.login();
         return user;
     }
+
+    @Override
+    public ArrayList<Users> getAllUsers() {
+        return (ArrayList<Users>) userRepository.findAll();
+    }
+
 }
