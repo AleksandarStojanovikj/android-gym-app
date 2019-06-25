@@ -1,5 +1,8 @@
 package com.gymity.project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gymity.project.model.dto.OfferDto;
 
 import javax.persistence.*;
@@ -16,8 +19,9 @@ public class Offer {
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<TakenOffer> takenOffers;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "gym_id", referencedColumnName = "id")
+    @JsonBackReference
     public Gym gym;
 
     public Long price;
@@ -35,7 +39,7 @@ public class Offer {
         if (offerDto.year == null || offerDto.month == null || offerDto.day == null)
             this.endOfOffer = LocalDateTime.now().plusDays(10);
         else
-            this.endOfOffer = LocalDateTime.from(LocalDate.of(offerDto.year, offerDto.month, offerDto.day));
+            this.endOfOffer = LocalDateTime.of(offerDto.year, offerDto.month, offerDto.day, 0, 0);
     }
 
     public Offer(){}
