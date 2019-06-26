@@ -17,6 +17,10 @@ public class GymCardRecyclerViewAdapter extends RecyclerView.Adapter<GymCardView
 
     private List<Gym> gyms;
 
+    public GymCardRecyclerViewAdapter(List<Gym> gyms) {
+        this.gyms = gyms;
+    }
+
     @NonNull
     @Override
     public GymCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

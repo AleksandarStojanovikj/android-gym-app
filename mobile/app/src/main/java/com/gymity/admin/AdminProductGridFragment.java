@@ -22,9 +22,13 @@ import com.gymity.NavigationHost;
 import com.gymity.NavigationIconClickListener;
 import com.gymity.ProductGridItemDecoration;
 import com.gymity.R;
+import com.gymity.adapters.GymCardRecyclerViewAdapter;
 import com.gymity.adapters.OfferCardRecyclerViewAdapter;
 import com.gymity.clients.GymApiClient;
+import com.gymity.model.Gym;
 import com.gymity.model.OfferDto;
+import com.gymity.model.Users;
+import com.gymity.repository.GymClient;
 import com.gymity.repository.OfferClient;
 
 import java.util.List;
@@ -47,6 +51,9 @@ public class AdminProductGridFragment extends Fragment {
 
     private OfferClient offerClient;
     private List<OfferDto> offers;
+    private List<Gym> gyms;
+    private GymClient gymClient;
+    private List<Users> users;
 
     @Override
     public View onCreateView(
@@ -62,7 +69,7 @@ public class AdminProductGridFragment extends Fragment {
             public void onResponse(Call<List<OfferDto>> call, Response<List<OfferDto>> response) {
                 if (response.code() >= 200 && response.code() < 300) {
                     offers = response.body();
-                    setUpRecyclerView(view);
+                    setUpRecyclerViewOffers(view);
                 } else
                     Toast.makeText(getContext(), "No offers available", Toast.LENGTH_SHORT);
             }
@@ -70,6 +77,25 @@ public class AdminProductGridFragment extends Fragment {
             @Override
             public void onFailure(Call<List<OfferDto>> call, Throwable t) {
                 Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT);
+            }
+        });
+
+        gymClient = GymApiClient.getRetrofitInstance().create(GymClient.class);
+        Call<List<Gym>> gymCall = gymClient.getGyms();
+        gymCall.enqueue(new Callback<List<Gym>>() {
+            @Override
+            public void onResponse(Call<List<Gym>> call, Response<List<Gym>> response) {
+                if(response.code() >=200 && response.code() < 300){
+                    gyms = response.body();
+                    setUpRecyclerViewGyms(view);
+                } else {
+                    Toast.makeText(getContext(), "No gyms available", Toast.LENGTH_SHORT);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Gym>> call, Throwable t) {
+
             }
         });
 
@@ -109,17 +135,9 @@ public class AdminProductGridFragment extends Fragment {
         return view;
     }
 
-    public void setUpRecyclerView(View view) {
+    public void setUpRecyclerViewOffers(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_offers);
-        recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return 1;
-            }
-        });
-        recyclerView.setLayoutManager(gridLayoutManager);
+        setUpRecyclerView(recyclerView);
 
         OfferCardRecyclerViewAdapter adapter = new OfferCardRecyclerViewAdapter(offers);
         recyclerView.setAdapter(adapter);
@@ -129,6 +147,32 @@ public class AdminProductGridFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             view.findViewById(R.id.product_grid).setBackgroundResource(R.drawable.shr_product_grid_background_shape);
         }
+    }
+
+     public void setUpRecyclerViewGyms(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_gyms);
+        setUpRecyclerView(recyclerView);
+
+        GymCardRecyclerViewAdapter adapter = new GymCardRecyclerViewAdapter(gyms);
+        recyclerView.setAdapter(adapter);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_staggered_product_grid_spacing_small);
+        recyclerView.addItemDecoration(new ProductGridItemDecoration(smallPadding, smallPadding));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.product_grid).setBackgroundResource(R.drawable.shr_product_grid_background_shape);
+        }
+    }
+
+    public void setUpRecyclerView(RecyclerView recyclerView){
+        recyclerView.setHasFixedSize(true);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return 1;
+            }
+        });
+        recyclerView.setLayoutManager(gridLayoutManager);
     }
 
     private void setUpToolbar(View view) {
