@@ -5,6 +5,7 @@ import com.gymity.project.exceptions.UserAlreadyExists;
 import com.gymity.project.exceptions.UserDoesNotExist;
 import com.gymity.project.model.Credentials;
 import com.gymity.project.model.Gym;
+import com.gymity.project.model.Offer;
 import com.gymity.project.model.Users;
 import com.gymity.project.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,18 @@ public class UsersController {
         try {
             ArrayList<Gym> gyms = userManagementService.getGymsForUser(username);
             return ResponseEntity.status(HttpStatus.OK).body(gyms);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+    }
+
+    @GetMapping("/users/{username}/offers")
+    public ResponseEntity<ArrayList<Offer>> getOffersForUser(@PathVariable String username) {
+        try {
+            ArrayList<Offer> offers = userManagementService.getOffersForUser(username);
+            return ResponseEntity.status(HttpStatus.OK).body(offers);
         } catch (Exception ex) {
             ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
