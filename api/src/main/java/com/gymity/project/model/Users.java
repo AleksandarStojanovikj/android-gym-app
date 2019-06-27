@@ -1,11 +1,14 @@
 package com.gymity.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.rmi.server.UID;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "users")
+@JsonIgnoreProperties
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +21,7 @@ public class Users {
     public List<TakenOffer> myOffers;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     public List<Membership> memberships;
 
     public String fullName;

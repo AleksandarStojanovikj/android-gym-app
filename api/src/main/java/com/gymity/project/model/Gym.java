@@ -14,7 +14,9 @@ public class Gym {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Long id;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "gym", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "gym_reference")
     public List<Membership> memberships;
 
     @OneToMany(mappedBy = "gym", orphanRemoval = true)
