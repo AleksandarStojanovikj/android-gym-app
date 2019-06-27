@@ -4,7 +4,7 @@ public class UserDoesNotExist extends Exception {
 
     public String message;
 
-    public UserDoesNotExist(){
+    public UserDoesNotExist() {
         this.message = "User does not exist!";
     }
 }

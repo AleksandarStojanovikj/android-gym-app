@@ -1,7 +1,6 @@
 package com.gymity.project.web;
 
 import com.gymity.project.exceptions.GymDoesNotExist;
-import com.gymity.project.exceptions.ObjectDoesNotExist;
 import com.gymity.project.model.Offer;
 import com.gymity.project.model.dto.OfferDto;
 import com.gymity.project.service.OfferManagementService;

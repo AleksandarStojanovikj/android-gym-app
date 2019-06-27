@@ -2,8 +2,6 @@ package com.gymity.project.model.dto;
 
 import com.gymity.project.model.Gym;
 
-import java.time.LocalDateTime;
-
 public class OfferDto {
     public Gym gym;
     public Long price;

@@ -20,7 +20,7 @@ public class GymManagementServiceImpl implements GymManagementService {
 
     @Override
     public void addGym(Gym gym) throws GymAlreadyExists {
-        if(gymsRepository.findByName(gym.name) != null)
+        if (gymsRepository.findByName(gym.name) != null)
             throw new GymAlreadyExists();
 
         gymsRepository.save(gym);

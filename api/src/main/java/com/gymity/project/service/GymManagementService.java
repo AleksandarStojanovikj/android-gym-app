@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface GymManagementService {
     void addGym(Gym gym) throws GymAlreadyExists;
+
     List<Gym> getAllGyms();
 }
