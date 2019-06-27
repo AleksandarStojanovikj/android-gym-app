@@ -1,14 +1,9 @@
 package com.gymity.project.service.impl;
 
-import com.gymity.project.exceptions.InvalidCredentials;
-import com.gymity.project.exceptions.UserAlreadyExists;
-import com.gymity.project.exceptions.UserDoesNotExist;
-import com.gymity.project.exceptions.UserDoesNotHaveMemberships;
-import com.gymity.project.model.Credentials;
-import com.gymity.project.model.Gym;
-import com.gymity.project.model.Membership;
-import com.gymity.project.model.Users;
+import com.gymity.project.exceptions.*;
+import com.gymity.project.model.*;
 import com.gymity.project.repository.MembershipRepository;
+import com.gymity.project.repository.TakenOffersRepository;
 import com.gymity.project.repository.UserRepository;
 import com.gymity.project.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +15,13 @@ import java.util.ArrayList;
 public class UserManagementServiceImpl implements UserManagementService {
     private final UserRepository userRepository;
     private final MembershipRepository membershipRepository;
+    private final TakenOffersRepository takenOffersRepository;
 
     @Autowired
-    public UserManagementServiceImpl(UserRepository userRepository, MembershipRepository membershipRepository) {
+    public UserManagementServiceImpl(UserRepository userRepository, MembershipRepository membershipRepository, TakenOffersRepository takenOffersRepository) {
         this.userRepository = userRepository;
         this.membershipRepository = membershipRepository;
+        this.takenOffersRepository = takenOffersRepository;
     }
 
     @Override
@@ -71,4 +68,22 @@ public class UserManagementServiceImpl implements UserManagementService {
         return userGyms;
     }
 
+    @Override
+    public ArrayList<Offer> getOffersForUser(String username) throws UserDoesNotExist, UserDoesNotHaveOffers {
+        Users user = userRepository.findByCredentialsUsername(username);
+
+        if (user == null)
+            throw new UserDoesNotExist();
+
+        ArrayList<TakenOffer> userTakenOffers = takenOffersRepository.findAllByUserId(user.id);
+
+        if (userTakenOffers == null || userTakenOffers.isEmpty())
+            throw new UserDoesNotHaveOffers();
+
+        ArrayList<Offer> userOffers = new ArrayList<>();
+
+        userTakenOffers.forEach(takenOffer -> userOffers.add(takenOffer.offer));
+
+        return userOffers;
+    }
 }
