@@ -1,5 +1,7 @@
 package com.gymity.project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,11 +13,13 @@ public class TakenOffer {
 
     @ManyToOne
     @JoinColumn(name = "offer_id", referencedColumnName = "id")
+    @JsonBackReference(value = "offer_reference")
     public Offer offer;
 
 
     @ManyToOne
     @JoinColumn(name = "users_id", referencedColumnName = "id")
+    @JsonBackReference(value = "user_reference")
     public Users user;
 
     public LocalDateTime startDate;

@@ -1,6 +1,7 @@
 package com.gymity.project.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gymity.project.model.dto.OfferDto;
@@ -17,6 +18,8 @@ public class Offer {
     public Long id;
 
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "offer_reference")
+    @JsonIgnore
     public List<TakenOffer> takenOffers;
 
     @ManyToOne

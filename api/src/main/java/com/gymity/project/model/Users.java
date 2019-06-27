@@ -18,6 +18,7 @@ public class Users {
     public Credentials credentials;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value = "user_reference")
     public List<TakenOffer> myOffers;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
