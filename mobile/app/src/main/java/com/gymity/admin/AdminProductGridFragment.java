@@ -54,8 +54,6 @@ public class AdminProductGridFragment extends Fragment {
     private List<OfferDto> offers;
     private List<Gym> gyms;
     private GymClient gymClient;
-    private List<Users> users;
-    private UserClient userClient;
 
     @Override
     public View onCreateView(
@@ -106,24 +104,6 @@ public class AdminProductGridFragment extends Fragment {
 
         });
 
-        userClient = GymApiClient.getRetrofitInstance().create(UserClient.class);
-        Call<List<Users>> usersCall = userClient.getAllUsers();
-        usersCall.enqueue(new Callback<List<Users>>() {
-            @Override
-            public void onResponse(Call<List<Users>> call, Response<List<Users>> response) {
-                if (response.code() >= 200 && response.code() < 300) {
-                    users = response.body();
-                    setUpRecyclerViewUsers(view);
-                } else {
-                    Toast.makeText(getContext(), "No users available", Toast.LENGTH_SHORT);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Users>> call, Throwable t) {
-                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT);
-            }
-        });
 
         gymButton = view.findViewById(R.id.gyms_button);
         offersButton = view.findViewById(R.id.offers_button);
@@ -181,15 +161,6 @@ public class AdminProductGridFragment extends Fragment {
         recyclerView.addItemDecoration(new ProductGridItemDecoration(smallPadding, smallPadding));
     }
 
-    public void setUpRecyclerViewUsers(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_users);
-        setUpRecyclerView(recyclerView);
-
-        GymCardRecyclerViewAdapter adapter = new GymCardRecyclerViewAdapter(gyms);
-        recyclerView.setAdapter(adapter);
-        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_staggered_product_grid_spacing_small);
-        recyclerView.addItemDecoration(new ProductGridItemDecoration(smallPadding, smallPadding));
-    }
 
     public void setUpRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);

@@ -17,6 +17,10 @@ public class UserCardRecyclerViewAdapter extends RecyclerView.Adapter<UserCardVi
 
     private List<Users> users;
 
+    public UserCardRecyclerViewAdapter(List<Users> users) {
+        this.users = users;
+    }
+
     @NonNull
     @Override
     public UserCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
