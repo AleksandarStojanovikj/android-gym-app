@@ -62,6 +62,10 @@ public class AdminProductGridFragment extends Fragment {
         final View view = inflater.inflate(R.layout.shr_admin_product_grid, container, false);
         setUpToolbar(view);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.product_grid).setBackgroundResource(R.drawable.shr_product_grid_background_shape);
+        }
+
         offerClient = GymApiClient.getRetrofitInstance().create(OfferClient.class);
         Call<List<OfferDto>> call = offerClient.getOffers();
         call.enqueue(new Callback<List<OfferDto>>() {
@@ -143,10 +147,6 @@ public class AdminProductGridFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_staggered_product_grid_spacing_small);
         recyclerView.addItemDecoration(new ProductGridItemDecoration(smallPadding, smallPadding));
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            view.findViewById(R.id.product_grid).setBackgroundResource(R.drawable.shr_product_grid_background_shape);
-        }
     }
 
      public void setUpRecyclerViewGyms(View view) {
@@ -158,9 +158,7 @@ public class AdminProductGridFragment extends Fragment {
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_staggered_product_grid_spacing_small);
         recyclerView.addItemDecoration(new ProductGridItemDecoration(smallPadding, smallPadding));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            view.findViewById(R.id.product_grid).setBackgroundResource(R.drawable.shr_product_grid_background_shape);
-        }
+
     }
 
     public void setUpRecyclerView(RecyclerView recyclerView){

@@ -13,6 +13,6 @@ public interface GymClient {
     @POST("gyms")
     Call<Gym> addGym(@Body Gym gym);
 
-    @GET
+    @GET("gyms")
     Call<List<Gym>> getGyms();
 }
