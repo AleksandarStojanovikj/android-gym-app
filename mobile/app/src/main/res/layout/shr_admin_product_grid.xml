@@ -58,7 +58,16 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_offers"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_users"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp" />
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
