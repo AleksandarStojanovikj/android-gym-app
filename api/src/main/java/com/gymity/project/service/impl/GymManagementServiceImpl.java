@@ -1,6 +1,7 @@
 package com.gymity.project.service.impl;
 
 import com.gymity.project.exceptions.GymAlreadyExists;
+import com.gymity.project.exceptions.GymDoesNotExist;
 import com.gymity.project.model.Gym;
 import com.gymity.project.repository.GymsRepository;
 import com.gymity.project.service.GymManagementService;
@@ -24,6 +25,14 @@ public class GymManagementServiceImpl implements GymManagementService {
             throw new GymAlreadyExists();
 
         gymsRepository.save(gym);
+    }
+
+    @Override
+    public Gym getGym(Long id) throws GymDoesNotExist {
+        if(gymsRepository.findById(id) == null)
+            throw new GymDoesNotExist();
+
+        return gymsRepository.findById(id).get();
     }
 
     @Override
