@@ -33,8 +33,8 @@ public class OfferCardRecyclerViewAdapter extends RecyclerView.Adapter<OfferCard
     public void onBindViewHolder(@NonNull OfferCardViewHolder holder, int position) {
         if(offers != null && position<offers.size()){
             OfferDto offer = offers.get(position);
-            holder.offerPrice.setText(offer.price.toString());
-            holder.offerGym.setText("Gym: " + offer.price);
+            holder.offerPrice.setText(offer.price.toString() + " denars");
+            holder.offerGym.setText("Gym: " + offer.gym.name);
             holder.offerDescription.setText(offer.description);
         }
     }
