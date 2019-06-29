@@ -22,7 +22,7 @@ public class Offer {
 
     @ManyToOne
     @JoinColumn(name = "gym_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonManagedReference
     public Gym gym;
 
     public Long price;
