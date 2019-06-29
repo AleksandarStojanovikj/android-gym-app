@@ -35,7 +35,7 @@ public class OfferCardRecyclerViewAdapter extends RecyclerView.Adapter<OfferCard
             OfferDto offer = offers.get(position);
             holder.offerPrice.setText(offer.price.toString());
             holder.offerGym.setText("Gym: " + offer.price);
-            holder.offerGym.setText(offer.description);
+            holder.offerDescription.setText(offer.description);
         }
     }
 

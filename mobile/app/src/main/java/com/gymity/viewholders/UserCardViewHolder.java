@@ -16,6 +16,6 @@ public class UserCardViewHolder extends RecyclerView.ViewHolder {
     public UserCardViewHolder(@NonNull View itemView) {
         super(itemView);
         fullName = itemView.findViewById(R.id.user_fullName_text_view);
-        fullName = itemView.findViewById(R.id.user_username_text_view);
+        username = itemView.findViewById(R.id.user_username_text_view);
     }
 }

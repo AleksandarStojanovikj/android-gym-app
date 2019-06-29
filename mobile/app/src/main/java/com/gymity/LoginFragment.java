@@ -53,7 +53,7 @@ public class LoginFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* userClient = GymApiClient.getRetrofitInstance().create(UserClient.class);
+                userClient = GymApiClient.getRetrofitInstance().create(UserClient.class);
                 Call<Users> call = userClient.loginUser(new Credentials(usernameEditText.getText().toString(), passwordEditText.getText().toString()));
                 call.enqueue(new Callback<Users>() {
                     @Override
@@ -71,8 +71,8 @@ public class LoginFragment extends Fragment {
                     public void onFailure(Call<Users> call, Throwable t) {
                         Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
-                });*/
-                ((NavigationHost) getActivity()).navigateTo(new AdminProductGridFragment(), false);
+                });
+
             }
         });
 
