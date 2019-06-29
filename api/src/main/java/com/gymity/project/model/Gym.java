@@ -1,16 +1,14 @@
 package com.gymity.project.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@JsonIgnoreProperties
-public class Gym {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Gym  {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Long id;
@@ -21,7 +19,7 @@ public class Gym {
     public List<Membership> memberships;
 
     @OneToMany(mappedBy = "gym", orphanRemoval = true)
-    @JsonBackReference
+//    @JsonBackReference
     public List<Offer> offers;
 
     public String name;

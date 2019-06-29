@@ -1,16 +1,16 @@
 package com.gymity.project.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import com.gymity.project.model.dto.OfferDto;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-public class Offer {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Offer{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Long id;
@@ -22,7 +22,7 @@ public class Offer {
 
     @ManyToOne
     @JoinColumn(name = "gym_id", referencedColumnName = "id")
-    @JsonManagedReference
+//    @JsonManagedReference
     public Gym gym;
 
     public Long price;
