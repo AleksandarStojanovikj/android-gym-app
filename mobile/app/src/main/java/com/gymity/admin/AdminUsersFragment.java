@@ -78,7 +78,7 @@ public class AdminUsersFragment extends Fragment {
                 Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT);
             }
         });
-        
+
         gymButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
