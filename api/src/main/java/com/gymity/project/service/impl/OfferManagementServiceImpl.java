@@ -39,4 +39,9 @@ public class OfferManagementServiceImpl implements OfferManagementService {
     public List<Offer> getAllOffers() {
         return offersRepository.findAll();
     }
+
+    @Override
+    public Offer getOffer(Long id) {
+        return offersRepository.findById(id).get();
+    }
 }

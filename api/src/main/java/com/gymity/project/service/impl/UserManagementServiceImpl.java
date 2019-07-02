@@ -9,6 +9,7 @@ import com.gymity.project.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Service
@@ -85,5 +86,19 @@ public class UserManagementServiceImpl implements UserManagementService {
         userTakenOffers.forEach(takenOffer -> userOffers.add(takenOffer.offer));
 
         return userOffers;
+    }
+
+    @Override
+    public void takeOffer(Long userId, Offer offer) throws UserHasAlreadyTakenOffer {
+        if(takenOffersRepository.findByUserAndOffer(userRepository.findById(userId).get(), offer) != null){
+            throw new UserHasAlreadyTakenOffer();
+        }
+
+        TakenOffer takenOffer = new TakenOffer();
+        takenOffer.startDate = LocalDateTime.now();
+        takenOffer.offer = offer;
+        takenOffer.user = userRepository.findById(userId).get();
+
+        takenOffersRepository.save(takenOffer);
     }
 }

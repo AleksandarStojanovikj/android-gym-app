@@ -9,4 +9,5 @@ import java.util.List;
 public interface OfferManagementService {
     void addOffer(Offer offer) throws GymDoesNotExist;
     List<Offer> getAllOffers();
+    Offer getOffer(Long id);
 }
