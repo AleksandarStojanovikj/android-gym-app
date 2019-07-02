@@ -2,8 +2,11 @@ package com.gymity.project.service.impl;
 
 import com.gymity.project.exceptions.GymDoesNotExist;
 import com.gymity.project.model.Offer;
+import com.gymity.project.model.TakenOffer;
 import com.gymity.project.repository.GymsRepository;
 import com.gymity.project.repository.OffersRepository;
+import com.gymity.project.repository.TakenOffersRepository;
+import com.gymity.project.repository.UserRepository;
 import com.gymity.project.service.OfferManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,7 @@ public class OfferManagementServiceImpl implements OfferManagementService {
     private final OffersRepository offersRepository;
 
     @Autowired
-    public OfferManagementServiceImpl(GymsRepository gymsRepository, OffersRepository offersRepository) {
+    public OfferManagementServiceImpl(GymsRepository gymsRepository, OffersRepository offersRepository, UserRepository userRepository, TakenOffersRepository takenOffersRepository) {
         this.gymsRepository = gymsRepository;
         this.offersRepository = offersRepository;
     }
@@ -30,6 +33,7 @@ public class OfferManagementServiceImpl implements OfferManagementService {
         offer.gym = gymsRepository.findByName(offer.gym.name);
         offersRepository.save(offer);
     }
+
 
     @Override
     public List<Offer> getAllOffers() {
