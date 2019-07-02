@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.gymity.adapters.OfferCardRecyclerViewAdapter;
 import com.gymity.clients.GymApiClient;
 import com.gymity.model.OfferDto;
@@ -33,6 +34,10 @@ public class OffersFragment extends Fragment {
 
     private List<OfferDto> myOffers;
     private OfferClient offerClient;
+    private MaterialButton gymButton;
+    private MaterialButton offersButton;
+    private MaterialButton notificationsButton;
+    private MaterialButton myAccountButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,7 @@ public class OffersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.shr_offers, container, false);
         setUpToolbar(view);
+        setUpView(view);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             view.findViewById(R.id.product_grid).setBackgroundResource(R.drawable.shr_product_grid_background_shape);
@@ -68,6 +74,33 @@ public class OffersFragment extends Fragment {
             }
         });
 
+        gymButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost) getActivity()).navigateTo(new GymsFragment(), true);
+            }
+        });
+
+        offersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost) getActivity()).navigateTo(new OffersFragment(), true);
+            }
+        });
+
+        notificationsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost) getActivity()).navigateTo(new NotificationsFragment(), true);
+            }
+        });
+
+        myAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost) getActivity()).navigateTo(new MyAccountFragment(), true);
+            }
+        });
 
         return view;
     }
@@ -87,6 +120,13 @@ public class OffersFragment extends Fragment {
                 getContext().getResources().getDrawable(R.drawable.shr_close_menu))); // Menu close icon
     }
 
+    private void setUpView(View view) {
+        gymButton = view.findViewById(R.id.gyms_button);
+        offersButton = view.findViewById(R.id.offers_button);
+        notificationsButton = view.findViewById(R.id.notifications_button);
+        myAccountButton = view.findViewById(R.id.my_account_button);
+
+    }
 
     public void setUpRecyclerViewOffers(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_offers);
