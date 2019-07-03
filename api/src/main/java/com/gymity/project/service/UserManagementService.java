@@ -20,4 +20,6 @@ public interface UserManagementService {
     ArrayList<Offer> getOffersForUser(String username) throws UserDoesNotExist, UserDoesNotHaveOffers;
 
     void takeOffer(Long userId, Offer offer) throws UserHasAlreadyTakenOffer;
+
+    void subscribeToGym(Users user, Gym gym) throws UserHasAlreadySubscribedToGym;
 }

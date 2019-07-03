@@ -101,4 +101,15 @@ public class UserManagementServiceImpl implements UserManagementService {
 
         takenOffersRepository.save(takenOffer);
     }
+
+    @Override
+    public void subscribeToGym(Users user , Gym gym) throws UserHasAlreadySubscribedToGym {
+        if(membershipRepository.findByUsersAndAndGym(user, gym) != null)
+            throw new UserHasAlreadySubscribedToGym();
+
+        Membership membership = new Membership();
+        membership.gym = gym;
+        membership.users = user;
+        membershipRepository.save(membership);
+    }
 }
