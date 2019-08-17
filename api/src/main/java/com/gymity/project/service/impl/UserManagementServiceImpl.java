@@ -2,9 +2,7 @@ package com.gymity.project.service.impl;
 
 import com.gymity.project.exceptions.*;
 import com.gymity.project.model.*;
-import com.gymity.project.repository.MembershipRepository;
-import com.gymity.project.repository.TakenOffersRepository;
-import com.gymity.project.repository.UserRepository;
+import com.gymity.project.repository.*;
 import com.gymity.project.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +14,16 @@ public class UserManagementServiceImpl implements UserManagementService {
     private final UserRepository userRepository;
     private final MembershipRepository membershipRepository;
     private final TakenOffersRepository takenOffersRepository;
+    private final GymsRepository gymsRepository;
+    private final OffersRepository offersRepository;
 
     @Autowired
-    public UserManagementServiceImpl(UserRepository userRepository, MembershipRepository membershipRepository, TakenOffersRepository takenOffersRepository) {
+    public UserManagementServiceImpl(UserRepository userRepository, MembershipRepository membershipRepository, TakenOffersRepository takenOffersRepository, GymsRepository gymsRepository, OffersRepository offersRepository) {
         this.userRepository = userRepository;
         this.membershipRepository = membershipRepository;
         this.takenOffersRepository = takenOffersRepository;
+        this.gymsRepository = gymsRepository;
+        this.offersRepository = offersRepository;
     }
 
     @Override
@@ -85,5 +87,42 @@ public class UserManagementServiceImpl implements UserManagementService {
         userTakenOffers.forEach(takenOffer -> userOffers.add(takenOffer.offer));
 
         return userOffers;
+    }
+
+    @Override
+    public void subscribeToGym(String username, Gym gym) throws UserDoesNotExist, UserHasAlreadySubscribedToGym, GymDoesNotExist {
+        Users user = userRepository.findByCredentialsUsername(username);
+
+        if (user == null)
+            throw new UserDoesNotExist();
+
+        if (gymsRepository.findByName(gym.name) == null)
+            throw new GymDoesNotExist();
+
+        if (membershipRepository.findAllByUsersIdAndAndGym(user.id, gym) == null)
+            throw new UserHasAlreadySubscribedToGym();
+
+
+        membershipRepository.save(new Membership(gym, user));
+    }
+
+    @Override
+    public void subscribeToOffer(String username, Offer offer) throws UserDoesNotExist, GymDoesNotExist, UserHasAlreadySubscribedToOffer, OfferDoesNotExist {
+        Users user = userRepository.findByCredentialsUsername(username);
+
+        if (user == null)
+            throw new UserDoesNotExist();
+
+        if(!offersRepository.findByName(offer.name).isPresent())
+            throw new OfferDoesNotExist();
+
+        if (gymsRepository.findByName(offer.gym.name) == null)
+            throw new GymDoesNotExist();
+
+        if (takenOffersRepository.findAllByUserIdAndOfferGym(user.id, offer.gym) == null)
+            throw new UserHasAlreadySubscribedToOffer();
+
+        takenOffersRepository.save(new TakenOffer(offer, user));
+
     }
 }

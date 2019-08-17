@@ -3,6 +3,7 @@ package com.gymity.project.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,6 +24,12 @@ public class TakenOffer {
     public Users user;
 
     public LocalDateTime startDate;
+
+    public TakenOffer(Offer offer, Users user) {
+        this.offer = offer;
+        this.user = user;
+        this.startDate = LocalDateTime.now();
+    }
 
     public LocalDateTime getEndDate(){
         return startDate.plusDays(offer.durationInDays);

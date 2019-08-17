@@ -21,4 +21,9 @@ public class Membership {
     @JoinColumn(name = "users_id")
     @JsonBackReference
     public Users users;
+
+    public Membership(Gym gym, Users users) {
+        this.gym = gym;
+        this.users = users;
+    }
 }

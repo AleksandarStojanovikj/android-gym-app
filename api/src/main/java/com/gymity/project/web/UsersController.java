@@ -1,8 +1,6 @@
 package com.gymity.project.web;
 
-import com.gymity.project.exceptions.InvalidCredentials;
-import com.gymity.project.exceptions.UserAlreadyExists;
-import com.gymity.project.exceptions.UserDoesNotExist;
+import com.gymity.project.exceptions.*;
 import com.gymity.project.model.Credentials;
 import com.gymity.project.model.Gym;
 import com.gymity.project.model.Offer;
@@ -74,6 +72,43 @@ public class UsersController {
         } catch (Exception ex) {
             ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @PostMapping("/users/{username}/subscribe-to-gym")
+    public ResponseEntity subscribeToGym(@PathVariable String username, @RequestBody Gym gym) {
+        try {
+            userManagementService.subscribeToGym(username, gym);
+            return ResponseEntity.status(HttpStatus.OK).body("User has subscribed!");
+        } catch (GymDoesNotExist gymDoesNotExist) {
+            gymDoesNotExist.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(gymDoesNotExist.message);
+        } catch (UserHasAlreadySubscribedToGym userHasAlreadySubscribedToGym) {
+            userHasAlreadySubscribedToGym.printStackTrace();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(userHasAlreadySubscribedToGym.getMessage());
+        } catch (UserDoesNotExist userDoesNotExist) {
+            userDoesNotExist.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userDoesNotExist.message);
+        }
+    }
+
+    @PostMapping("/users/{username}/subscribe-to-offer")
+    public ResponseEntity subscribeToOffer(@PathVariable String username, @RequestBody Offer offer) {
+        try {
+            userManagementService.subscribeToOffer(username, offer);
+            return ResponseEntity.status(HttpStatus.OK).body("User has subscribed!");
+        } catch (GymDoesNotExist gymDoesNotExist) {
+            gymDoesNotExist.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(gymDoesNotExist.message);
+        } catch (UserDoesNotExist userDoesNotExist) {
+            userDoesNotExist.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userDoesNotExist.message);
+        } catch (UserHasAlreadySubscribedToOffer userHasAlreadySubscribedToOffer) {
+            userHasAlreadySubscribedToOffer.printStackTrace();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(userHasAlreadySubscribedToOffer.getMessage());
+        } catch (OfferDoesNotExist offerDoesNotExist) {
+            offerDoesNotExist.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(offerDoesNotExist.getMessage());
         }
     }
 }
