@@ -113,7 +113,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (user == null)
             throw new UserDoesNotExist();
 
-        if(!offersRepository.findByName(offer.name).isPresent())
+        if (!offersRepository.findByName(offer.name).isPresent())
             throw new OfferDoesNotExist();
 
         if (gymsRepository.findByName(offer.gym.name) == null)
@@ -122,7 +122,9 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (takenOffersRepository.findAllByUserIdAndOfferGym(user.id, offer.gym) == null)
             throw new UserHasAlreadySubscribedToOffer();
 
-        takenOffersRepository.save(new TakenOffer(offer, user));
+        if (membershipRepository.findAllByUsersIdAndAndGym(user.id, offer.gym) == null)
+            membershipRepository.save(new Membership(offer.gym, user));
 
+        takenOffersRepository.save(new TakenOffer(offer, user));
     }
 }
