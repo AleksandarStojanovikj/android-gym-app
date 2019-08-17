@@ -32,29 +32,50 @@
             app:navigationIcon="@drawable/shr_menu"
             app:title="@string/shr_app_name" />
 
-      <!--  <android.support.v7.widget.SearchView
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/SearchViewTheme" />-->
+        <!--  <android.support.v7.widget.SearchView
+              android:id="@+id/search_view"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:theme="@style/SearchViewTheme" />-->
 
     </com.google.android.material.appbar.AppBarLayout>
 
-   <androidx.core.widget.NestedScrollView
-       android:id="@+id/product_grid"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:layout_marginTop="56dp"
-       android:background="@color/productGridBackgroundColor"
-       android:elevation="8dp"
-       app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/product_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:background="@color/productGridBackgroundColor"
+        android:elevation="8dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-       <androidx.recyclerview.widget.RecyclerView
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:id="@+id/recycler_view"
-           android:layout_marginTop="20dp"/>
-   </androidx.core.widget.NestedScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_gyms"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_offers"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_users"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp" />
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

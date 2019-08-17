@@ -75,6 +75,7 @@ public class UsersController {
         }
     }
 
+<<<<<<< HEAD
     @PostMapping("/users/{username}/subscribe-to-gym")
     public ResponseEntity subscribeToGym(@PathVariable String username, @RequestBody Gym gym) {
         try {
@@ -111,4 +112,6 @@ public class UsersController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(offerDoesNotExist.getMessage());
         }
     }
+=======
+>>>>>>> 954aca740d1d3e180c8554f999851d0d708805c0
 }

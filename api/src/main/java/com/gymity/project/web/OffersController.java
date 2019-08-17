@@ -1,9 +1,13 @@
 package com.gymity.project.web;
 
 import com.gymity.project.exceptions.GymDoesNotExist;
+import com.gymity.project.exceptions.UserHasAlreadyTakenOffer;
 import com.gymity.project.model.Offer;
+import com.gymity.project.model.TakenOffer;
+import com.gymity.project.model.Users;
 import com.gymity.project.model.dto.OfferDto;
 import com.gymity.project.service.OfferManagementService;
+import com.gymity.project.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,10 +21,12 @@ import java.util.List;
 @RequestMapping(value = "/offers", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OffersController {
     private final OfferManagementService offerManagementService;
+    private final UserManagementService userManagementService;
 
     @Autowired
-    public OffersController(OfferManagementService offerManagementService) {
+    public OffersController(OfferManagementService offerManagementService, UserManagementService userManagementService) {
         this.offerManagementService = offerManagementService;
+        this.userManagementService = userManagementService;
     }
 
     @PostMapping
@@ -38,5 +44,16 @@ public class OffersController {
     @GetMapping
     public ResponseEntity<List<Offer>> getAllOffers() {
         return ResponseEntity.status(HttpStatus.OK).body(offerManagementService.getAllOffers());
+    }
+
+    @PostMapping("/{offerId}")
+    public ResponseEntity takeOfferForUser(@PathVariable Long offerId, @RequestBody Users user) {
+        try {
+            userManagementService.takeOffer(user.id, offerManagementService.getOffer(offerId));
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (UserHasAlreadyTakenOffer userHasAlreadyTakenOffer) {
+            System.out.println(userHasAlreadyTakenOffer.message);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 }
