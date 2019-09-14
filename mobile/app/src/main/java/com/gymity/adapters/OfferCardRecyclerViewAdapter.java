@@ -81,7 +81,7 @@ public class OfferCardRecyclerViewAdapter extends RecyclerView.Adapter<OfferCard
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Something went wrong! Please try again later", Toast.LENGTH_SHORT).show();
             }
         });
     }

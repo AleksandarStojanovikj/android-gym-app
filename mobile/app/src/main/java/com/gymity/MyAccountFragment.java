@@ -112,10 +112,8 @@ public class MyAccountFragment extends Fragment {
                 if (response.code() >= 200 && response.code() < 300) {
                     offers = response.body();
                     setUpRecyclerViewOffers(view);
-                } else
-                    Toast.makeText(getContext(), "No offers available", Toast.LENGTH_SHORT).show();
+                }
             }
-
 
             @Override
             public void onFailure(Call<List<OfferDto>> call, Throwable t) {
@@ -133,8 +131,7 @@ public class MyAccountFragment extends Fragment {
                 if (response.code() >= 200 && response.code() < 300) {
                     gyms = response.body();
                     setUpRecyclerViewGyms(view);
-                } else
-                    Toast.makeText(getContext(), "No offers available", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

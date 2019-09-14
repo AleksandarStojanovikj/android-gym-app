@@ -65,7 +65,7 @@ public class MyGymCardRecyclerViewAdapter extends RecyclerView.Adapter<MyGymCard
 
     private void makeApiCallForUnsubscribingFromGym(int position) {
         UserClient userClient = GymApiClient.getRetrofitInstance().create(UserClient.class);
-        Call<String> unsubscribeFromGym = userClient.unsubscribeFromGym(SaveSharedPreference.getUsername(context), gyms.get(position).name);
+        Call<String> unsubscribeFromGym = userClient.unsubscribeFromGym(SaveSharedPreference.getUsername(context), gyms.get(position));
 
         unsubscribeFromGym.enqueue(new Callback<String>() {
             @Override
@@ -74,9 +74,7 @@ public class MyGymCardRecyclerViewAdapter extends RecyclerView.Adapter<MyGymCard
                     Toast.makeText(context, "You have successfully unsubscribed to gym", Toast.LENGTH_SHORT).show();
                     ((NavigationHost) context).navigateTo(new MyAccountFragment(), true);
                 } else if (response.code() == 404) {
-                    Toast.makeText(context, "You were not subscribed to this gym", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    ((NavigationHost) context).navigateTo(new MyAccountFragment(), true);
                 }
             }
 

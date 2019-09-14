@@ -131,13 +131,13 @@ public class AdminOffersFragment extends Fragment {
                             if (response.code() >= 200 && response.code() < 300) {
                                 ((NavigationHost) getActivity()).navigateTo(new AdminProductGridFragment(), false);
                             } else {
-                                Toast.makeText(getContext(), "Gym doesn't exist", Toast.LENGTH_SHORT);
+                                Toast.makeText(getContext(), "Gym doesn't exist", Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<OfferDto> call, Throwable t) {
-                            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT);
+                            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
