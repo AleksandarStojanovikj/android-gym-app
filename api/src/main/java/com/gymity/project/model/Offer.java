@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Offer{
+public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Long id;
@@ -31,6 +31,9 @@ public class Offer{
     public LocalDateTime endOfOffer;
     public Long durationInDays;
 
+    public Offer() {
+    }
+
     public Offer(OfferDto offerDto) {
         this.gym = offerDto.gym;
         this.price = offerDto.price;
@@ -42,6 +45,4 @@ public class Offer{
         else
             this.endOfOffer = LocalDateTime.of(offerDto.year, offerDto.month, offerDto.day, 0, 0);
     }
-
-    public Offer(){}
 }

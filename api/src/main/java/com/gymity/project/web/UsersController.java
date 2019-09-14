@@ -25,13 +25,13 @@ public class UsersController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Users> loginUser(@RequestBody Credentials credentials) {
+    public ResponseEntity<?> loginUser(@RequestBody Credentials credentials) {
         try {
             Users user = userManagementService.login(credentials);
             return ResponseEntity.status(HttpStatus.OK).body(user);
         } catch (InvalidCredentials | UserDoesNotExist invalidCredentials) {
             invalidCredentials.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(invalidCredentials.getMessage());
         }
     }
 
@@ -75,7 +75,6 @@ public class UsersController {
         }
     }
 
-<<<<<<< HEAD
     @PostMapping("/users/{username}/subscribe-to-gym")
     public ResponseEntity subscribeToGym(@PathVariable String username, @RequestBody Gym gym) {
         try {
@@ -112,6 +111,4 @@ public class UsersController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(offerDoesNotExist.getMessage());
         }
     }
-=======
->>>>>>> 954aca740d1d3e180c8554f999851d0d708805c0
 }

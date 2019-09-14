@@ -2,6 +2,7 @@ package com.gymity.project.web;
 
 import com.gymity.project.exceptions.GymAlreadyExists;
 import com.gymity.project.exceptions.GymDoesNotExist;
+import com.gymity.project.exceptions.UserDoesNotExist;
 import com.gymity.project.exceptions.UserHasAlreadySubscribedToGym;
 import com.gymity.project.model.Gym;
 import com.gymity.project.model.Users;
@@ -45,23 +46,25 @@ public class GymsController {
     }
 
     @GetMapping(value = "{id}")
-    public ResponseEntity<Gym> getGym(@PathVariable Long id){
+    public ResponseEntity<Gym> getGym(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(gymManagementService.getGym(id));
-        } catch (GymDoesNotExist gymDoesNotExist){
+        } catch (GymDoesNotExist gymDoesNotExist) {
             System.out.println(gymDoesNotExist.message);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
     @PostMapping(value = "{id}")
-    public ResponseEntity subscribe(@PathVariable Long id, @RequestBody Users user){
-        try{
-            userManagementService.subscribeToGym(user, gymManagementService.getGym(id));
+    public ResponseEntity subscribe(@PathVariable Long id, @RequestBody Users user) {
+        try {
+            userManagementService.subscribeToGym(user.credentials.username, gymManagementService.getGym(id));
             return new ResponseEntity(HttpStatus.OK);
         } catch (UserHasAlreadySubscribedToGym | GymDoesNotExist userHasAlreadySubscribedToGym) {
             userHasAlreadySubscribedToGym.printStackTrace();
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        } catch (UserDoesNotExist userDoesNotExist) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
 }

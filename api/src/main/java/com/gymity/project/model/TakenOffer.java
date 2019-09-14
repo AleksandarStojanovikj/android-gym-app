@@ -25,13 +25,16 @@ public class TakenOffer {
 
     public LocalDateTime startDate;
 
+    public TakenOffer() {
+    }
+
     public TakenOffer(Offer offer, Users user) {
         this.offer = offer;
         this.user = user;
         this.startDate = LocalDateTime.now();
     }
 
-    public LocalDateTime getEndDate(){
+    public LocalDateTime getEndDate() {
         return startDate.plusDays(offer.durationInDays);
     }
 

@@ -35,6 +35,7 @@ public class GymsFragment extends Fragment {
     MaterialButton offersButton;
     MaterialButton notificationsButton;
     MaterialButton myAccountButton;
+    MaterialButton logoutButton;
 
     @Nullable
     @Override
@@ -96,6 +97,14 @@ public class GymsFragment extends Fragment {
             }
         });
 
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveSharedPreference.clearUsernameOnLogout(getActivity());
+                ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
+            }
+        });
+
         return view;
     }
 
@@ -119,6 +128,7 @@ public class GymsFragment extends Fragment {
         offersButton = view.findViewById(R.id.offers_button);
         notificationsButton = view.findViewById(R.id.notifications_button);
         myAccountButton = view.findViewById(R.id.my_account_button);
+        logoutButton = view.findViewById(R.id.logout_button);
     }
 
     public void setUpRecyclerViewGyms(View view) {

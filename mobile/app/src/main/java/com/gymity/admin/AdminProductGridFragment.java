@@ -27,10 +27,8 @@ import com.gymity.adapters.OfferCardRecyclerViewAdapter;
 import com.gymity.clients.GymApiClient;
 import com.gymity.model.Gym;
 import com.gymity.model.OfferDto;
-import com.gymity.model.Users;
 import com.gymity.repository.GymClient;
 import com.gymity.repository.OfferClient;
-import com.gymity.repository.UserClient;
 
 import java.util.List;
 

@@ -23,7 +23,6 @@ import com.gymity.adapters.OfferCardRecyclerViewAdapter;
 import com.gymity.clients.GymApiClient;
 import com.gymity.model.Gym;
 import com.gymity.model.OfferDto;
-import com.gymity.network.ProductEntry;
 import com.gymity.repository.GymClient;
 import com.gymity.repository.OfferClient;
 
@@ -48,6 +47,7 @@ public class ProductGridFragment extends Fragment {
     MaterialButton offersButton;
     MaterialButton notificationsButton;
     MaterialButton myAccountButton;
+    MaterialButton logoutButton;
 
     private OfferClient offerClient;
     private List<OfferDto> offers;
@@ -131,6 +131,15 @@ public class ProductGridFragment extends Fragment {
                 ((NavigationHost) getActivity()).navigateTo(new MyAccountFragment(), true);
             }
         });
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveSharedPreference.clearUsernameOnLogout(getActivity());
+                ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
+            }
+        });
+
         return view;
     }
 
@@ -139,6 +148,7 @@ public class ProductGridFragment extends Fragment {
         offersButton = view.findViewById(R.id.offers_button);
         notificationsButton = view.findViewById(R.id.notifications_button);
         myAccountButton = view.findViewById(R.id.my_account_button);
+        logoutButton = view.findViewById(R.id.logout_button);
 
     }
 

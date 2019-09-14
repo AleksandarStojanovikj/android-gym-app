@@ -22,6 +22,9 @@ public class Membership {
     @JsonBackReference
     public Users users;
 
+    public Membership() {
+    }
+
     public Membership(Gym gym, Users users) {
         this.gym = gym;
         this.users = users;

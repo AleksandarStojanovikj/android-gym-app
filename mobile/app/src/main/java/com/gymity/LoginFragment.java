@@ -59,10 +59,14 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onResponse(Call<Users> call, Response<Users> response) {
                         if (response.code() == 200) {
-                            if (response.body().isAdmin)
+                            if (response.body().isAdmin) {
                                 ((NavigationHost) getActivity()).navigateTo(new AdminProductGridFragment(), false);
-                            else
+                            } else {
                                 ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
+                            }
+
+                            SaveSharedPreference.setUserOnLogin(getActivity(), response.body().credentials.username, response.body().isAdmin);
+
                         } else
                             Toast.makeText(getContext(), "Incorrect credentials", Toast.LENGTH_SHORT).show();
                     }

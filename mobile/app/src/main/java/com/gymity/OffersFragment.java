@@ -38,6 +38,7 @@ public class OffersFragment extends Fragment {
     private MaterialButton offersButton;
     private MaterialButton notificationsButton;
     private MaterialButton myAccountButton;
+    private MaterialButton logoutButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,14 @@ public class OffersFragment extends Fragment {
             }
         });
 
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveSharedPreference.clearUsernameOnLogout(getActivity());
+                ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
+            }
+        });
+
         return view;
     }
 
@@ -125,6 +134,7 @@ public class OffersFragment extends Fragment {
         offersButton = view.findViewById(R.id.offers_button);
         notificationsButton = view.findViewById(R.id.notifications_button);
         myAccountButton = view.findViewById(R.id.my_account_button);
+        logoutButton = view.findViewById(R.id.logout_button);
 
     }
 

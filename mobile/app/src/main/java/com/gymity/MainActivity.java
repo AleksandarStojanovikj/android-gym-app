@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.gymity.admin.AdminProductGridFragment;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationHost {
 
@@ -14,10 +16,22 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shr_main_activity);
 
-        if (savedInstanceState == null) {
+        if (SaveSharedPreference.getUsername(MainActivity.this).length() == 0) {
+            if (savedInstanceState == null) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container, new LoginFragment())
+                        .commit();
+            }
+        } else if (SaveSharedPreference.getIsAdmin(MainActivity.this)) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, new LoginFragment())
+                    .add(R.id.container, new AdminProductGridFragment())
+                    .commit();
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container, new ProductGridFragment())
                     .commit();
         }
     }

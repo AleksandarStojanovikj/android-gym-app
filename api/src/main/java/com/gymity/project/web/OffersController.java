@@ -1,7 +1,6 @@
 package com.gymity.project.web;
 
-import com.gymity.project.exceptions.GymDoesNotExist;
-import com.gymity.project.exceptions.UserHasAlreadyTakenOffer;
+import com.gymity.project.exceptions.*;
 import com.gymity.project.model.Offer;
 import com.gymity.project.model.TakenOffer;
 import com.gymity.project.model.Users;
@@ -49,11 +48,12 @@ public class OffersController {
     @PostMapping("/{offerId}")
     public ResponseEntity takeOfferForUser(@PathVariable Long offerId, @RequestBody Users user) {
         try {
-            userManagementService.takeOffer(user.id, offerManagementService.getOffer(offerId));
+            userManagementService.subscribeToOffer(user.credentials.username, offerManagementService.getOffer(offerId));
             return new ResponseEntity(HttpStatus.OK);
-        } catch (UserHasAlreadyTakenOffer userHasAlreadyTakenOffer) {
-            System.out.println(userHasAlreadyTakenOffer.message);
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        } catch (GymDoesNotExist | UserDoesNotExist | OfferDoesNotExist exception) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } catch (UserHasAlreadySubscribedToOffer userHasAlreadySubscribedToOffer) {
+            return new ResponseEntity(HttpStatus.CONFLICT);
         }
     }
 }
