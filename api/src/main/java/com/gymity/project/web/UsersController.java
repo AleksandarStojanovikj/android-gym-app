@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -51,12 +52,12 @@ public class UsersController {
     }
 
     @GetMapping("/users/{username}/gyms")
-    public ResponseEntity<ArrayList<Gym>> getGymsForUser(@PathVariable String username) {
+    public ResponseEntity<List<Gym>> getGymsForUser(@PathVariable String username) {
         try {
-            ArrayList<Gym> gyms = userManagementService.getGymsForUser(username);
+            List<Gym> gyms = userManagementService.getGymsForUser(username);
             return ResponseEntity.status(HttpStatus.OK).body(gyms);
         } catch (UserDoesNotHaveMemberships | UserDoesNotExist exception) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ArrayList<>());
         }
 
     }

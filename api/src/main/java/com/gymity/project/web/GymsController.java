@@ -1,9 +1,6 @@
 package com.gymity.project.web;
 
-import com.gymity.project.exceptions.GymAlreadyExists;
-import com.gymity.project.exceptions.GymDoesNotExist;
-import com.gymity.project.exceptions.UserDoesNotExist;
-import com.gymity.project.exceptions.UserHasAlreadySubscribedToGym;
+import com.gymity.project.exceptions.*;
 import com.gymity.project.model.Gym;
 import com.gymity.project.model.Users;
 import com.gymity.project.service.GymManagementService;
@@ -14,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -65,4 +63,14 @@ public class GymsController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
+//
+//    @GetMapping(value = "/users/{username}")
+//    public ResponseEntity<List<Gym>> getGymsForUser(@PathVariable String username) {
+//        try {
+//            List<Gym> gyms = userManagementService.getGymsForUser(username);
+//            return ResponseEntity.status(HttpStatus.OK).body(gyms);
+//        } catch (UserDoesNotHaveMemberships | UserDoesNotExist exception) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ArrayList<>());
+//        }
+//    }
 }
