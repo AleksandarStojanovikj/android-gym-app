@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
@@ -54,10 +55,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public ArrayList<Gym> getGymsForUser(String username) throws UserDoesNotExist, UserDoesNotHaveMemberships {
-        Users user = userRepository.findByCredentialsUsername(username);
-
-        if (user == null)
-            throw new UserDoesNotExist();
+        Users user = Optional.of(userRepository.findByCredentialsUsername(username)).orElseThrow(UserDoesNotExist::new);
 
         ArrayList<Membership> userMemberships = membershipRepository.findAllByUsersId(user.id);
 
@@ -128,5 +126,14 @@ public class UserManagementServiceImpl implements UserManagementService {
         }
 
         takenOffersRepository.save(new TakenOffer(actualOfferForSubscription, user));
+    }
+
+    @Override
+    public void unsubscribeFromGym(String username, String gymName) throws UserDoesNotExist, GymDoesNotExist, UserDoesNotHaveMembershipToGym {
+        Optional.of(userRepository.findByCredentialsUsername(username)).orElseThrow(UserDoesNotExist::new);
+        Optional.of(gymsRepository.findByName(gymName)).orElseThrow(GymDoesNotExist::new);
+        Membership membership = Optional.of(membershipRepository.findAllByUsersCredentialsUsernameAndGymName(username, gymName)).orElseThrow(UserDoesNotHaveMembershipToGym::new);
+
+        membershipRepository.delete(membership);
     }
 }

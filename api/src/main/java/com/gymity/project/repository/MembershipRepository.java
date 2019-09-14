@@ -13,9 +13,9 @@ import java.util.ArrayList;
 public interface MembershipRepository extends JpaRepository<Membership, Long> {
     ArrayList<Membership> findAllByUsersId(Long id);
 
-    ArrayList<Membership> findAllByUsersIdAndGym(Long id, Gym gym);
+    Membership findAllByUsersIdAndGym(Long id, Gym gym);
 
-    ArrayList<Membership> findAllByUsersCredentialsUsernameAndGymName(String username, String gymName);
+    Membership findAllByUsersCredentialsUsernameAndGymName(String username, String gymName);
 
     Membership findByUsersAndGym(Users user, Gym gym);
 }

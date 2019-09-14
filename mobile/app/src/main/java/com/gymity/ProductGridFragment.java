@@ -25,7 +25,6 @@ import com.gymity.model.Gym;
 import com.gymity.model.OfferDto;
 import com.gymity.repository.GymClient;
 import com.gymity.repository.OfferClient;
-import com.gymity.repository.UserClient;
 
 import java.util.List;
 
@@ -47,7 +46,6 @@ public class ProductGridFragment extends Fragment {
     private List<OfferDto> offers;
     private List<Gym> gyms;
     private GymClient gymClient;
-    private UserClient userClient;
 
     public ProductGridFragment() {
     }

@@ -29,4 +29,13 @@ public interface UserClient {
 
     @POST("users/{username}/subscribe-to-gym")
     Call<Gym> subscribeToGym(@Path("username") String username, @Body Gym gym);
+
+    @POST("users/{username}/{gymName}")
+    Call<String> unsubscribeFromGym(@Path("username") String username, @Path("gymName") String gymName);
+
+    @GET("users/{username}/offers")
+    Call<List<OfferDto>> getMyOffers(@Path("username") String username);
+
+    @GET("users/{username}/gyms")
+    Call<List<Gym>> getMyGyms(@Path("username") String username);
 }

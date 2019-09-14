@@ -14,6 +14,7 @@
     <string name="shr_incorrect_credentials">Incorrect credentials</string>
     <string name="shr_register">Register</string>
     <string name="shr_subscribe">Subscribe</string>
+    <string name="shr_unsubscribe">Unsubscribe</string>
 
     <!-- Shrine backdrop menu labels -->
     <string name="shr_gyms">Gyms</string>

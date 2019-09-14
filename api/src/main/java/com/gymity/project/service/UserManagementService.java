@@ -22,4 +22,6 @@ public interface UserManagementService {
     void subscribeToGym(String username, Gym gym) throws UserDoesNotExist, UserHasAlreadySubscribedToGym, GymDoesNotExist;
 
     void subscribeToOffer(String username, Offer offer) throws UserDoesNotExist, GymDoesNotExist, UserHasAlreadySubscribedToOffer, OfferDoesNotExist;
+
+    void unsubscribeFromGym(String username, String gymName) throws UserDoesNotExist, GymDoesNotExist, UserDoesNotHaveMembershipToGym;
 }

@@ -55,8 +55,8 @@ public class UsersController {
         try {
             ArrayList<Gym> gyms = userManagementService.getGymsForUser(username);
             return ResponseEntity.status(HttpStatus.OK).body(gyms);
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } catch (UserDoesNotHaveMemberships | UserDoesNotExist exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
     }
@@ -82,6 +82,16 @@ public class UsersController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(userHasAlreadySubscribedToGym.getMessage());
         } catch (UserDoesNotExist userDoesNotExist) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userDoesNotExist.message);
+        }
+    }
+
+    @PostMapping("/users/{username}/{gymName}")
+    public ResponseEntity<?> unsubscribeFromGym(@PathVariable String username, @PathVariable String gymName) {
+        try {
+            userManagementService.unsubscribeFromGym(username, gymName);
+            return ResponseEntity.status(HttpStatus.OK).body("User has successfully unsubscribed from gym");
+        } catch (UserDoesNotHaveMembershipToGym | GymDoesNotExist | UserDoesNotExist exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
         }
     }
 
