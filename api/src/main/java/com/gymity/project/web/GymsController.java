@@ -35,7 +35,6 @@ public class GymsController {
             gymManagementService.addGym(gym);
             return ResponseEntity.status(HttpStatus.OK).body(gym);
         } catch (GymAlreadyExists gymAlreadyExists) {
-            System.out.println(gymAlreadyExists.message);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
@@ -50,7 +49,6 @@ public class GymsController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(gymManagementService.getGym(id));
         } catch (GymDoesNotExist gymDoesNotExist) {
-            System.out.println(gymDoesNotExist.message);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }

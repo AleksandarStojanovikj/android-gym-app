@@ -72,6 +72,8 @@ public class GymCardRecyclerViewAdapter extends RecyclerView.Adapter<GymCardView
                     Toast.makeText(context, "You have successfully subscribed to gym", Toast.LENGTH_SHORT).show();
                 } else if (response.code() == 409) {
                     Toast.makeText(context, "You have already subscribed to this gym", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
             }
 

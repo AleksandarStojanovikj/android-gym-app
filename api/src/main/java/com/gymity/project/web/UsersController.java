@@ -30,7 +30,6 @@ public class UsersController {
             Users user = userManagementService.login(credentials);
             return ResponseEntity.status(HttpStatus.OK).body(user);
         } catch (InvalidCredentials | UserDoesNotExist invalidCredentials) {
-            invalidCredentials.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(invalidCredentials.getMessage());
         }
     }
@@ -41,7 +40,6 @@ public class UsersController {
             userManagementService.register(user);
             return ResponseEntity.status(HttpStatus.OK).body(user);
         } catch (UserAlreadyExists userAlreadyExists) {
-            userAlreadyExists.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
@@ -58,7 +56,6 @@ public class UsersController {
             ArrayList<Gym> gyms = userManagementService.getGymsForUser(username);
             return ResponseEntity.status(HttpStatus.OK).body(gyms);
         } catch (Exception ex) {
-            ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
@@ -70,7 +67,6 @@ public class UsersController {
             ArrayList<Offer> offers = userManagementService.getOffersForUser(username);
             return ResponseEntity.status(HttpStatus.OK).body(offers);
         } catch (Exception ex) {
-            ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
@@ -95,16 +91,12 @@ public class UsersController {
             userManagementService.subscribeToOffer(username, offer);
             return ResponseEntity.status(HttpStatus.OK).body(offer);
         } catch (GymDoesNotExist gymDoesNotExist) {
-            gymDoesNotExist.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(gymDoesNotExist.message);
         } catch (UserDoesNotExist userDoesNotExist) {
-            userDoesNotExist.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userDoesNotExist.message);
         } catch (UserHasAlreadySubscribedToOffer userHasAlreadySubscribedToOffer) {
-            userHasAlreadySubscribedToOffer.printStackTrace();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(userHasAlreadySubscribedToOffer.getMessage());
         } catch (OfferDoesNotExist offerDoesNotExist) {
-            offerDoesNotExist.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(offerDoesNotExist.getMessage());
         }
     }

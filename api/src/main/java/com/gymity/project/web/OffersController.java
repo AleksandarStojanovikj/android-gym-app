@@ -35,7 +35,6 @@ public class OffersController {
             offerManagementService.addOffer(offer);
             return ResponseEntity.status(HttpStatus.OK).body(offer);
         } catch (GymDoesNotExist exception) {
-            System.out.println(exception.message);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }

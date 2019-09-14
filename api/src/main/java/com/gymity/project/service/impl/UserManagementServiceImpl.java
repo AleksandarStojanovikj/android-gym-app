@@ -111,22 +111,22 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Override
     public void subscribeToOffer(String username, Offer offer) throws UserDoesNotExist, GymDoesNotExist, UserHasAlreadySubscribedToOffer, OfferDoesNotExist {
         Users user = userRepository.findByCredentialsUsername(username);
+        Offer actualOfferForSubscription = offersRepository.findByName(offer.name).orElseThrow(OfferDoesNotExist::new);
+        Gym actualOfferGym = gymsRepository.findByName(offer.gym.name);
 
         if (user == null)
             throw new UserDoesNotExist();
 
-        if (!offersRepository.findByName(offer.name).isPresent())
-            throw new OfferDoesNotExist();
-
-        if (gymsRepository.findByName(offer.gym.name) == null)
+        if (actualOfferGym == null)
             throw new GymDoesNotExist();
 
-        if (takenOffersRepository.findAllByUserIdAndOfferGym(user.id, offer.gym) == null)
+        if (takenOffersRepository.findAllByUserIdAndOfferGym(user.id, actualOfferGym).size() != 0)
             throw new UserHasAlreadySubscribedToOffer();
 
-        if (membershipRepository.findAllByUsersIdAndGym(user.id, offer.gym) == null)
-            membershipRepository.save(new Membership(offer.gym, user));
+        if (membershipRepository.findAllByUsersIdAndGym(user.id, actualOfferGym) == null) {
+            membershipRepository.save(new Membership(actualOfferGym, user));
+        }
 
-        takenOffersRepository.save(new TakenOffer(offer, user));
+        takenOffersRepository.save(new TakenOffer(actualOfferForSubscription, user));
     }
 }
