@@ -18,10 +18,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.gymity.LoginFragment;
 import com.gymity.NavigationHost;
 import com.gymity.NavigationIconClickListener;
 import com.gymity.ProductGridItemDecoration;
 import com.gymity.R;
+import com.gymity.SaveSharedPreference;
 import com.gymity.adapters.GymCardRecyclerViewAdapter;
 import com.gymity.adapters.OfferCardRecyclerViewAdapter;
 import com.gymity.clients.GymApiClient;
@@ -47,6 +49,7 @@ public class AdminProductGridFragment extends Fragment {
     private MaterialButton offersButton;
     private MaterialButton notificationsButton;
     private MaterialButton usersButton;
+    private MaterialButton logoutButton;
 
     private OfferClient offerClient;
     private List<OfferDto> offers;
@@ -59,6 +62,7 @@ public class AdminProductGridFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.shr_admin_product_grid, container, false);
         setUpToolbar(view);
+        setUpView(view);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             view.findViewById(R.id.product_grid).setBackgroundResource(R.drawable.shr_product_grid_background_shape);
@@ -103,12 +107,6 @@ public class AdminProductGridFragment extends Fragment {
         });
 
 
-        gymButton = view.findViewById(R.id.gyms_button);
-        offersButton = view.findViewById(R.id.offers_button);
-        notificationsButton = view.findViewById(R.id.notifications_button);
-        usersButton = view.findViewById(R.id.users_button);
-
-
         gymButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +134,24 @@ public class AdminProductGridFragment extends Fragment {
                 ((NavigationHost) getActivity()).navigateTo(new AdminUsersFragment(), true);
             }
         });
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveSharedPreference.clearUsernameOnLogout(getActivity());
+                ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
+            }
+        });
+
         return view;
+    }
+
+    private void setUpView(View view) {
+        gymButton = view.findViewById(R.id.gyms_button);
+        offersButton = view.findViewById(R.id.offers_button);
+        notificationsButton = view.findViewById(R.id.notifications_button);
+        usersButton = view.findViewById(R.id.users_button);
+        logoutButton = view.findViewById(R.id.logout_button);
     }
 
     public void setUpRecyclerViewOffers(View view) {

@@ -19,11 +19,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.gymity.LoginFragment;
 import com.gymity.NavigationHost;
 import com.gymity.NavigationIconClickListener;
 import com.gymity.ProductGridItemDecoration;
 import com.gymity.R;
-import com.gymity.adapters.GymCardRecyclerViewAdapter;
+import com.gymity.SaveSharedPreference;
 import com.gymity.adapters.UserCardRecyclerViewAdapter;
 import com.gymity.clients.GymApiClient;
 import com.gymity.model.Users;
@@ -49,6 +50,7 @@ public class AdminUsersFragment extends Fragment {
     private MaterialButton offersButton;
     private MaterialButton notificationsButton;
     private MaterialButton usersButton;
+    private MaterialButton logoutButton;
 
     @Nullable
     @Override
@@ -106,6 +108,14 @@ public class AdminUsersFragment extends Fragment {
                 ((NavigationHost) getActivity()).navigateTo(new AdminUsersFragment(), true);
             }
         });
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveSharedPreference.clearUsernameOnLogout(getActivity());
+                ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
+            }
+        });
         return view;
     }
 
@@ -129,6 +139,7 @@ public class AdminUsersFragment extends Fragment {
         offersButton = view.findViewById(R.id.offers_button);
         notificationsButton = view.findViewById(R.id.notifications_button);
         usersButton = view.findViewById(R.id.users_button);
+        logoutButton = view.findViewById(R.id.logout_button);
     }
 
     public void setUpRecyclerViewUsers(View view) {

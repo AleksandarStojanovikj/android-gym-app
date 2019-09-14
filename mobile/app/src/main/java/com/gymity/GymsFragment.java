@@ -144,6 +144,7 @@ public class GymsFragment extends Fragment {
 
     public void setUpRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), LinearLayoutManager.VERTICAL);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override

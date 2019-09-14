@@ -13,6 +13,7 @@
     <string name="shr_product_description">Secondary text</string>
     <string name="shr_incorrect_credentials">Incorrect credentials</string>
     <string name="shr_register">Register</string>
+    <string name="shr_subscribe">Subscribe</string>
 
     <!-- Shrine backdrop menu labels -->
     <string name="shr_gyms">Gyms</string>
