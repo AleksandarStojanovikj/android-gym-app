@@ -76,27 +76,24 @@ public class UsersController {
     }
 
     @PostMapping("/users/{username}/subscribe-to-gym")
-    public ResponseEntity subscribeToGym(@PathVariable String username, @RequestBody Gym gym) {
+    public ResponseEntity<?> subscribeToGym(@PathVariable String username, @RequestBody Gym gym) {
         try {
             userManagementService.subscribeToGym(username, gym);
-            return ResponseEntity.status(HttpStatus.OK).body("User has subscribed!");
+            return ResponseEntity.status(HttpStatus.OK).body(gym);
         } catch (GymDoesNotExist gymDoesNotExist) {
-            gymDoesNotExist.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(gymDoesNotExist.message);
         } catch (UserHasAlreadySubscribedToGym userHasAlreadySubscribedToGym) {
-            userHasAlreadySubscribedToGym.printStackTrace();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(userHasAlreadySubscribedToGym.getMessage());
         } catch (UserDoesNotExist userDoesNotExist) {
-            userDoesNotExist.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userDoesNotExist.message);
         }
     }
 
     @PostMapping("/users/{username}/subscribe-to-offer")
-    public ResponseEntity subscribeToOffer(@PathVariable String username, @RequestBody Offer offer) {
+    public ResponseEntity<?> subscribeToOffer(@PathVariable String username, @RequestBody Offer offer) {
         try {
             userManagementService.subscribeToOffer(username, offer);
-            return ResponseEntity.status(HttpStatus.OK).body("User has subscribed!");
+            return ResponseEntity.status(HttpStatus.OK).body(offer);
         } catch (GymDoesNotExist gymDoesNotExist) {
             gymDoesNotExist.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(gymDoesNotExist.message);

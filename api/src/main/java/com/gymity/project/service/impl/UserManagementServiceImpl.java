@@ -93,18 +93,19 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Override
     public void subscribeToGym(String username, Gym gym) throws UserDoesNotExist, UserHasAlreadySubscribedToGym, GymDoesNotExist {
         Users user = userRepository.findByCredentialsUsername(username);
+        Gym actualGymForSubscription = gymsRepository.findByName(gym.name);
 
         if (user == null)
             throw new UserDoesNotExist();
 
-        if (gymsRepository.findByName(gym.name) == null)
+        if (actualGymForSubscription == null)
             throw new GymDoesNotExist();
 
-        if (membershipRepository.findAllByUsersIdAndGym(user.id, gym) == null)
+        if (membershipRepository.findAllByUsersCredentialsUsernameAndGymName(user.credentials.username, gym.name) != null)
             throw new UserHasAlreadySubscribedToGym();
 
 
-        membershipRepository.save(new Membership(gym, user));
+        membershipRepository.save(new Membership(actualGymForSubscription, user));
     }
 
     @Override

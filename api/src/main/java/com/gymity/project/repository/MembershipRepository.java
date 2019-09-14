@@ -15,5 +15,7 @@ public interface MembershipRepository extends JpaRepository<Membership, Long> {
 
     ArrayList<Membership> findAllByUsersIdAndGym(Long id, Gym gym);
 
+    ArrayList<Membership> findAllByUsersCredentialsUsernameAndGymName(String username, String gymName);
+
     Membership findByUsersAndGym(Users user, Gym gym);
 }
