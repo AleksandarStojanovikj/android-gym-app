@@ -131,7 +131,11 @@ public class UserManagementServiceImpl implements UserManagementService {
     public void unsubscribeFromGym(String username, String gymName) throws UserDoesNotExist, GymDoesNotExist, UserDoesNotHaveMembershipToGym {
         Optional.of(userRepository.findByCredentialsUsername(username)).orElseThrow(UserDoesNotExist::new);
         Optional.of(gymsRepository.findByName(gymName)).orElseThrow(GymDoesNotExist::new);
-        Membership membership = Optional.of(membershipRepository.findAllByUsersCredentialsUsernameAndGymName(username, gymName)).orElseThrow(UserDoesNotHaveMembershipToGym::new);
+        Membership membership = membershipRepository.findAllByUsersCredentialsUsernameAndGymName(username, gymName);
+
+        if (membership == null) {
+            throw new UserDoesNotHaveMembershipToGym();
+        }
 
         membershipRepository.delete(membership);
     }

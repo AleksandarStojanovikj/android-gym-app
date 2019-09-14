@@ -38,8 +38,9 @@ public class OfferManagementServiceImpl implements OfferManagementService {
 
     @Override
     public List<Offer> getAllOffers() {
-        return offersRepository.findAll().stream().
-                filter(offer -> offer.endOfOffer.isBefore(LocalDateTime.now()))
+        return offersRepository.findAll()
+                .stream()
+                .filter(offer -> offer.endOfOffer.isAfter(LocalDateTime.now()))
                 .collect(Collectors.toList());
     }
 

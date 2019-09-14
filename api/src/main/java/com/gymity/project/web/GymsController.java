@@ -28,12 +28,12 @@ public class GymsController {
     }
 
     @PostMapping
-    public ResponseEntity<Gym> addGym(@RequestBody Gym gym) {
+    public ResponseEntity<?> addGym(@RequestBody Gym gym) {
         try {
             gymManagementService.addGym(gym);
             return ResponseEntity.status(HttpStatus.OK).body(gym);
         } catch (GymAlreadyExists gymAlreadyExists) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(gymAlreadyExists.message);
         }
     }
 
@@ -63,14 +63,14 @@ public class GymsController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
-//
-//    @GetMapping(value = "/users/{username}")
-//    public ResponseEntity<List<Gym>> getGymsForUser(@PathVariable String username) {
-//        try {
-//            List<Gym> gyms = userManagementService.getGymsForUser(username);
-//            return ResponseEntity.status(HttpStatus.OK).body(gyms);
-//        } catch (UserDoesNotHaveMemberships | UserDoesNotExist exception) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ArrayList<>());
-//        }
-//    }
+
+    @GetMapping(value = "/users/{username}")
+    public ResponseEntity<List<Gym>> getGymsForUser(@PathVariable String username) {
+        try {
+            List<Gym> gyms = userManagementService.getGymsForUser(username);
+            return ResponseEntity.status(HttpStatus.OK).body(gyms);
+        } catch (UserDoesNotHaveMemberships | UserDoesNotExist exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ArrayList<>());
+        }
+    }
 }

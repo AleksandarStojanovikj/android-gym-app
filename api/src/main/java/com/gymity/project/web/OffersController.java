@@ -29,18 +29,18 @@ public class OffersController {
     }
 
     @PostMapping
-    public ResponseEntity<Offer> addOffer(@RequestBody OfferDto offerDto) {
+    public ResponseEntity<?> addOffer(@RequestBody OfferDto offerDto) {
         try {
             Offer offer = new Offer(offerDto);
             offerManagementService.addOffer(offer);
             return ResponseEntity.status(HttpStatus.OK).body(offer);
         } catch (GymDoesNotExist exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.message);
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<Offer>> getAllOffers() {
+    public ResponseEntity<?> getAllOffers() {
         return ResponseEntity.status(HttpStatus.OK).body(offerManagementService.getAllOffers());
     }
 

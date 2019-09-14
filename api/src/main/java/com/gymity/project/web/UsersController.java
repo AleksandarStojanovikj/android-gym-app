@@ -86,10 +86,10 @@ public class UsersController {
         }
     }
 
-    @PostMapping("/users/{username}/{gymName}")
-    public ResponseEntity<?> unsubscribeFromGym(@PathVariable String username, @PathVariable String gymName) {
+    @PostMapping("/users/{username}/unsubscribe")
+    public ResponseEntity<?> unsubscribeFromGym(@PathVariable String username, @RequestBody Gym gym) {
         try {
-            userManagementService.unsubscribeFromGym(username, gymName);
+            userManagementService.unsubscribeFromGym(username, gym.name);
             return ResponseEntity.status(HttpStatus.OK).body("User has successfully unsubscribed from gym");
         } catch (UserDoesNotHaveMembershipToGym | GymDoesNotExist | UserDoesNotExist exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
