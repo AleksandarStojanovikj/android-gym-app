@@ -68,10 +68,11 @@ public class RegisterFragment extends Fragment {
                         @Override
                         public void onResponse(Call<Users> call, Response<Users> response) {
                             if (response.code() == 200) {
+                                SaveSharedPreference.setUserOnLogin(getActivity(), response.body().credentials.username, response.body().isAdmin);
                                 ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
-                            } else
+                            } else {
                                 Toast.makeText(getContext(), "Username is taken", Toast.LENGTH_SHORT).show();
-
+                            }
                         }
 
                         @Override
