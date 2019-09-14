@@ -15,4 +15,5 @@ public interface OfferClient {
 
     @GET("offers")
     Call<List<OfferDto>> getOffers();
+
 }

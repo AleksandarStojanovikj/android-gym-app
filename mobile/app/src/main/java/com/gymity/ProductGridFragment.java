@@ -25,6 +25,7 @@ import com.gymity.model.Gym;
 import com.gymity.model.OfferDto;
 import com.gymity.repository.GymClient;
 import com.gymity.repository.OfferClient;
+import com.gymity.repository.UserClient;
 
 import java.util.List;
 
@@ -34,6 +35,20 @@ import retrofit2.Response;
 
 public class ProductGridFragment extends Fragment {
 
+    MaterialButton gymButton;
+    MaterialButton offersButton;
+    MaterialButton notificationsButton;
+    MaterialButton myAccountButton;
+    MaterialButton logoutButton;
+    MaterialButton subscribeToGymButton;
+    MaterialButton subscribeToOfferButton;
+
+    private OfferClient offerClient;
+    private List<OfferDto> offers;
+    private List<Gym> gyms;
+    private GymClient gymClient;
+    private UserClient userClient;
+
     public ProductGridFragment() {
     }
 
@@ -42,17 +57,6 @@ public class ProductGridFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
-    MaterialButton gymButton;
-    MaterialButton offersButton;
-    MaterialButton notificationsButton;
-    MaterialButton myAccountButton;
-    MaterialButton logoutButton;
-
-    private OfferClient offerClient;
-    private List<OfferDto> offers;
-    private List<Gym> gyms;
-    private GymClient gymClient;
 
     @Override
     public View onCreateView(
@@ -75,12 +79,12 @@ public class ProductGridFragment extends Fragment {
                     offers = response.body();
                     setUpRecyclerViewOffers(view);
                 } else
-                    Toast.makeText(getContext(), "No offers available", Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(), "No offers available", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<List<OfferDto>> call, Throwable t) {
-                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT);
+                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -93,13 +97,13 @@ public class ProductGridFragment extends Fragment {
                     gyms = response.body();
                     setUpRecyclerViewGyms(view);
                 } else {
-                    Toast.makeText(getContext(), "No gyms available", Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(), "No gyms available", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Gym>> call, Throwable t) {
-                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT);
+                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -149,7 +153,8 @@ public class ProductGridFragment extends Fragment {
         notificationsButton = view.findViewById(R.id.notifications_button);
         myAccountButton = view.findViewById(R.id.my_account_button);
         logoutButton = view.findViewById(R.id.logout_button);
-
+        subscribeToGymButton = view.findViewById(R.id.subscribe_to_gym_button);
+        subscribeToOfferButton = view.findViewById(R.id.subscribe_to_offer_button);
     }
 
     public void setUpRecyclerViewOffers(View view) {

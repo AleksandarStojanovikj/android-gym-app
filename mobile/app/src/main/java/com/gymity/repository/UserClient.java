@@ -1,6 +1,8 @@
 package com.gymity.repository;
 
 import com.gymity.model.Credentials;
+import com.gymity.model.Gym;
+import com.gymity.model.OfferDto;
 import com.gymity.model.Users;
 
 import java.util.List;
@@ -9,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface UserClient {
 
@@ -20,4 +23,10 @@ public interface UserClient {
 
     @GET("users")
     Call<List<Users>> getAllUsers();
+
+    @POST("users/{username}/subscribe-to-offer")
+    Call<OfferDto> subscribeToOffer(@Path("username") String username, @Body OfferDto offerDto);
+
+    @POST("users/{username}/subscribe-to-gym")
+    Call<Gym> subscribeToGym(@Path("username") String username, @Body Gym gym);
 }

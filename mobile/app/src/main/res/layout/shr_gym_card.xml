@@ -35,7 +35,7 @@
                 android:textAppearance="?attr/textAppearanceSubtitle2" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/subscribe_button"
+                android:id="@+id/subscribe_to_gym_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/shr_subscribe"
