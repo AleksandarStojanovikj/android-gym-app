@@ -2,7 +2,6 @@ package com.gymity.project.service.impl;
 
 import com.gymity.project.exceptions.GymDoesNotExist;
 import com.gymity.project.model.Offer;
-import com.gymity.project.model.TakenOffer;
 import com.gymity.project.repository.GymsRepository;
 import com.gymity.project.repository.OffersRepository;
 import com.gymity.project.repository.TakenOffersRepository;
@@ -11,7 +10,9 @@ import com.gymity.project.service.OfferManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OfferManagementServiceImpl implements OfferManagementService {
@@ -37,7 +38,9 @@ public class OfferManagementServiceImpl implements OfferManagementService {
 
     @Override
     public List<Offer> getAllOffers() {
-        return offersRepository.findAll();
+        return offersRepository.findAll().stream().
+                filter(offer -> offer.endOfOffer.isBefore(LocalDateTime.now()))
+                .collect(Collectors.toList());
     }
 
     @Override
