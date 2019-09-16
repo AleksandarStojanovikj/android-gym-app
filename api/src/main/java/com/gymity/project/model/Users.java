@@ -1,5 +1,6 @@
 package com.gymity.project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -24,6 +25,10 @@ public class Users {
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     public List<Membership> memberships;
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference(value = "comment_reference")
+    public List<Comment> comments;
 
     public String fullName;
     public String accessToken;

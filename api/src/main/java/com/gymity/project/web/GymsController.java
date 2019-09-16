@@ -1,7 +1,9 @@
 package com.gymity.project.web;
 
 import com.gymity.project.exceptions.*;
+import com.gymity.project.model.Comment;
 import com.gymity.project.model.Gym;
+import com.gymity.project.model.Offer;
 import com.gymity.project.model.Users;
 import com.gymity.project.service.GymManagementService;
 import com.gymity.project.service.UserManagementService;
@@ -70,6 +72,26 @@ public class GymsController {
             List<Gym> gyms = userManagementService.getGymsForUser(username);
             return ResponseEntity.status(HttpStatus.OK).body(gyms);
         } catch (UserDoesNotHaveMemberships | UserDoesNotExist exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ArrayList<>());
+        }
+    }
+
+    @GetMapping(value = "/{id}/comments")
+    public ResponseEntity<List<Comment>> getGymComments(@PathVariable Long id) {
+        try {
+            List<Comment> comments = gymManagementService.getGymComments(id);
+            return ResponseEntity.status(HttpStatus.OK).body(comments);
+        } catch (GymDoesNotExist gymDoesNotExist) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ArrayList<>());
+        }
+    }
+
+    @GetMapping(value = "/{id}/offers")
+    public ResponseEntity<List<Offer>> getGymOffers(@PathVariable Long id) {
+        try {
+            List<Offer> offers = gymManagementService.getGymOffers(id);
+            return ResponseEntity.status(HttpStatus.OK).body(offers);
+        } catch (GymDoesNotExist gymDoesNotExist) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ArrayList<>());
         }
     }
