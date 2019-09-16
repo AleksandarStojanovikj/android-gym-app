@@ -1,5 +1,6 @@
 package com.gymity.project.service.impl;
 
+import com.gymity.project.events.OnNewOfferEvent;
 import com.gymity.project.exceptions.GymDoesNotExist;
 import com.gymity.project.model.Offer;
 import com.gymity.project.repository.GymsRepository;
@@ -8,6 +9,7 @@ import com.gymity.project.repository.TakenOffersRepository;
 import com.gymity.project.repository.UserRepository;
 import com.gymity.project.service.OfferManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,11 +20,13 @@ import java.util.stream.Collectors;
 public class OfferManagementServiceImpl implements OfferManagementService {
     private final GymsRepository gymsRepository;
     private final OffersRepository offersRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
-    public OfferManagementServiceImpl(GymsRepository gymsRepository, OffersRepository offersRepository, UserRepository userRepository, TakenOffersRepository takenOffersRepository) {
+    public OfferManagementServiceImpl(GymsRepository gymsRepository, OffersRepository offersRepository, UserRepository userRepository, TakenOffersRepository takenOffersRepository, ApplicationEventPublisher applicationEventPublisher) {
         this.gymsRepository = gymsRepository;
         this.offersRepository = offersRepository;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
 
@@ -33,6 +37,8 @@ public class OfferManagementServiceImpl implements OfferManagementService {
 
         offer.gym = gymsRepository.findByName(offer.gym.name);
         offersRepository.save(offer);
+
+        this.applicationEventPublisher.publishEvent(new OnNewOfferEvent(offer));
     }
 
 
