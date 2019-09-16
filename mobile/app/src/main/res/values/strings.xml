@@ -22,4 +22,9 @@
     <string name="shr_notifications">Notifications</string>
     <string name="shr_my_account">My account</string>
     <string name="shr_logout">Logout</string>
+
+    <!-- Firebase -->
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="fcm_message">FCM Message</string>
 </resources>

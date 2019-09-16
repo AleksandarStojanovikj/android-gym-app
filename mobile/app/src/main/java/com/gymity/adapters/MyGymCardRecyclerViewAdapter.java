@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.gymity.MyAccountFragment;
 import com.gymity.NavigationHost;
 import com.gymity.R;
@@ -44,7 +45,7 @@ public class MyGymCardRecyclerViewAdapter extends RecyclerView.Adapter<MyGymCard
     @Override
     public void onBindViewHolder(@NonNull MyGymCardViewHolder holder, final int position) {
         if (gyms != null && position < gyms.size()) {
-            Gym gym = gyms.get(position);
+            final Gym gym = gyms.get(position);
             holder.gymName.setText(gym.name);
             holder.gymLocation.setText("Located: " + gym.location);
 
@@ -53,6 +54,8 @@ public class MyGymCardRecyclerViewAdapter extends RecyclerView.Adapter<MyGymCard
                 @Override
                 public void onClick(View v) {
                     makeApiCallForUnsubscribingFromGym(position);
+
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(gym.name.replace(' ', '-'));
                 }
             });
         }

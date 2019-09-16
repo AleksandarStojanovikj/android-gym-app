@@ -1,6 +1,7 @@
 package com.gymity.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.gymity.GymInfoFragment;
+import com.gymity.NavigationHost;
+import com.gymity.ProductGridFragment;
 import com.gymity.R;
 import com.gymity.SaveSharedPreference;
+import com.gymity.SingleFragmentActivity;
 import com.gymity.clients.GymApiClient;
 import com.gymity.model.Gym;
 import com.gymity.repository.UserClient;
@@ -42,15 +48,24 @@ public class GymCardRecyclerViewAdapter extends RecyclerView.Adapter<GymCardView
     @Override
     public void onBindViewHolder(@NonNull GymCardViewHolder holder, final int position) {
         if (gyms != null && position < gyms.size()) {
-            Gym gym = gyms.get(position);
+            final Gym gym = gyms.get(position);
             holder.gymName.setText(gym.name);
             holder.gymLocation.setText("Located: " + gym.location);
-
 
             holder.subscribeToGym.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     makeApiCallForSubscribingToOffer(position);
+
+                    FirebaseMessaging.getInstance().subscribeToTopic(gym.name.replace(' ', '-'));
+                }
+            });
+
+            holder.parent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SaveSharedPreference.setGymId(context, gym.id);
+                    ((NavigationHost) context).navigateTo(new GymInfoFragment(), true);
                 }
             });
         }
