@@ -48,12 +48,33 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/my_gyms"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="27dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_gyms"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:scrollbars="horizontal"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:fadeScrollbars="false"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/my_offers"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="27dp"
+                android:scrollbars="horizontal"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:fadeScrollbars="false" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_offers"

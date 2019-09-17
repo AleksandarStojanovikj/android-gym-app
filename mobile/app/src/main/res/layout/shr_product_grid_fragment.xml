@@ -33,8 +33,32 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gyms"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="27dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_gyms"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fadeScrollbars="false"
+                android:scrollbars="horizontal"
+                android:scrollbarAlwaysDrawHorizontalTrack="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Offers"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="27dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_offers"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
@@ -43,21 +67,11 @@
                 android:scrollbarAlwaysDrawHorizontalTrack="true" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_offers"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:fadeScrollbars="false"
-                android:scrollbars="horizontal"
-                android:scrollbarAlwaysDrawHorizontalTrack="true" />
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_users"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp" />
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/recycler_view_users"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginTop="20dp" />-->
 
 
         </LinearLayout>
