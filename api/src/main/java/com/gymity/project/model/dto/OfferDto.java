@@ -3,6 +3,8 @@ package com.gymity.project.model.dto;
 import com.gymity.project.model.Gym;
 import com.gymity.project.model.Offer;
 
+import java.time.LocalDateTime;
+
 public class OfferDto {
     public Gym gym;
     public Long price;
@@ -12,6 +14,7 @@ public class OfferDto {
     public Integer month;
     public Integer year;
     public Long durationInDays;
+    public Long remainingDays;
 
     public OfferDto() {
 

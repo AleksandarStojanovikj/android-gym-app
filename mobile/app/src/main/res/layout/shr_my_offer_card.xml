@@ -40,6 +40,14 @@
                 android:textAlignment="center"
                 android:textAppearance="?attr/textAppearanceBody2" />
 
+
+            <TextView
+                android:id="@+id/offer_remaining_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceBody2" />
+
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

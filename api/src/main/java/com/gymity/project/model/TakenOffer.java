@@ -3,6 +3,7 @@ package com.gymity.project.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -36,6 +37,10 @@ public class TakenOffer {
 
     public LocalDateTime getEndDate() {
         return startDate.plusDays(offer.durationInDays);
+    }
+
+    public Long remainingDays() {
+        return Duration.between(LocalDateTime.now(), startDate.plusDays(offer.durationInDays)).toDays();
     }
 
 }

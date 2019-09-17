@@ -9,6 +9,7 @@ public class OfferDto {
     public Integer endOfOfferYear;
     public Integer endOfOfferMonth;
     public Integer endOfOfferDay;
+    public Long remainingDays;
 
     public OfferDto(Gym gym, String name, String description, Long durationInDays, Long price, Integer endOfOfferYear, Integer endOfOfferMonth, Integer endOfOfferDay) {
         this.gym = gym;

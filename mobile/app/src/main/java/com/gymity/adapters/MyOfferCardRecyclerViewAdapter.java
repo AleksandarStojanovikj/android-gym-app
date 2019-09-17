@@ -39,6 +39,7 @@ public class MyOfferCardRecyclerViewAdapter extends RecyclerView.Adapter<MyOffer
             holder.offerPrice.setText(offer.price.toString() + " denars");
             holder.offerGym.setText("Gym: " + offer.gym.name);
             holder.offerDescription.setText(offer.description);
+            holder.offerRemainingDays.setText("Remaining days: " + offer.remainingDays);
 
         }
     }

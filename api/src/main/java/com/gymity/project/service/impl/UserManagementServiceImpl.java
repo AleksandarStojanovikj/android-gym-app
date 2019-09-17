@@ -87,8 +87,18 @@ public class UserManagementServiceImpl implements UserManagementService {
 
         userTakenOffers.forEach(takenOffer -> userOffers.add(takenOffer.offer));
 
-        return userOffers.stream()
-                .map(OfferDto::new)
+        List<OfferDto> resultingOffers = new ArrayList<>();
+
+        OfferDto offerDto;
+        for (TakenOffer takenOffer : userTakenOffers) {
+            offerDto = new OfferDto(takenOffer.offer);
+            offerDto.remainingDays = takenOffer.remainingDays();
+
+            resultingOffers.add(offerDto);
+        }
+
+        return resultingOffers.stream()
+                .filter(offerDto1 -> offerDto1.remainingDays  > 0)
                 .collect(Collectors.toList());
     }
 
