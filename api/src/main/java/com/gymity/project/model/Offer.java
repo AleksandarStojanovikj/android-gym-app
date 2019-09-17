@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -22,7 +22,7 @@ public class Offer {
 
     @ManyToOne
     @JoinColumn(name = "gym_id", referencedColumnName = "id")
-//    @JsonManagedReference
+    @JsonBackReference(value = "offers_gym_reference")
     public Gym gym;
 
     public Long price;

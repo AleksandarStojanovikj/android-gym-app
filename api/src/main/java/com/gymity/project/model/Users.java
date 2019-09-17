@@ -26,9 +26,9 @@ public class Users {
     @JsonManagedReference
     public List<Membership> memberships;
 
-    @OneToMany(mappedBy = "user")
-    @JsonBackReference(value = "comment_reference")
-    public List<Comment> comments;
+//    @OneToMany(mappedBy = "user")
+//    @JsonManagedReference(value = "comment_reference")
+//    public List<Comment> comments;
 
     public String fullName;
     public String accessToken;

@@ -20,7 +20,7 @@ public class Comment {
     private Gym gym;
 
     @ManyToOne
-    @JsonManagedReference(value = "comment_reference")
+//    @JsonBackReference(value = "comment_reference")
     @JoinColumn(name = "user_id")
     private Users user;
 

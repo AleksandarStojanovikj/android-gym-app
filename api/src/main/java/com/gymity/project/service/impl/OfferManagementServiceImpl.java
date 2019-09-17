@@ -3,6 +3,7 @@ package com.gymity.project.service.impl;
 import com.gymity.project.events.OnNewOfferEvent;
 import com.gymity.project.exceptions.GymDoesNotExist;
 import com.gymity.project.model.Offer;
+import com.gymity.project.model.dto.OfferDto;
 import com.gymity.project.repository.GymsRepository;
 import com.gymity.project.repository.OffersRepository;
 import com.gymity.project.repository.TakenOffersRepository;
@@ -43,10 +44,11 @@ public class OfferManagementServiceImpl implements OfferManagementService {
 
 
     @Override
-    public List<Offer> getAllOffers() {
+    public List<OfferDto> getAllOffers() {
         return offersRepository.findAll()
                 .stream()
                 .filter(offer -> offer.endOfOffer.isAfter(LocalDateTime.now()))
+                .map(OfferDto::new)
                 .collect(Collectors.toList());
     }
 

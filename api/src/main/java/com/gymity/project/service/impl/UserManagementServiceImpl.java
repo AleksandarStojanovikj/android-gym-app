@@ -2,13 +2,16 @@ package com.gymity.project.service.impl;
 
 import com.gymity.project.exceptions.*;
 import com.gymity.project.model.*;
+import com.gymity.project.model.dto.OfferDto;
 import com.gymity.project.repository.*;
 import com.gymity.project.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
@@ -69,7 +72,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
-    public ArrayList<Offer> getOffersForUser(String username) throws UserDoesNotExist, UserDoesNotHaveOffers {
+    public List<OfferDto> getOffersForUser(String username) throws UserDoesNotExist, UserDoesNotHaveOffers {
         Users user = userRepository.findByCredentialsUsername(username);
 
         if (user == null)
@@ -84,7 +87,9 @@ public class UserManagementServiceImpl implements UserManagementService {
 
         userTakenOffers.forEach(takenOffer -> userOffers.add(takenOffer.offer));
 
-        return userOffers;
+        return userOffers.stream()
+                .map(OfferDto::new)
+                .collect(Collectors.toList());
     }
 
     @Override

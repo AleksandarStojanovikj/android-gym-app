@@ -5,8 +5,10 @@ import com.gymity.project.model.Credentials;
 import com.gymity.project.model.Gym;
 import com.gymity.project.model.Offer;
 import com.gymity.project.model.Users;
+import com.gymity.project.model.dto.OfferDto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface UserManagementService {
     void register(Users user) throws UserAlreadyExists;
@@ -17,7 +19,7 @@ public interface UserManagementService {
 
     ArrayList<Gym> getGymsForUser(String username) throws UserDoesNotExist, UserDoesNotHaveMemberships;
 
-    ArrayList<Offer> getOffersForUser(String username) throws UserDoesNotExist, UserDoesNotHaveOffers;
+    List<OfferDto> getOffersForUser(String username) throws UserDoesNotExist, UserDoesNotHaveOffers;
 
     void subscribeToGym(String username, Gym gym) throws UserDoesNotExist, UserHasAlreadySubscribedToGym, GymDoesNotExist;
 

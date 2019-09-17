@@ -5,6 +5,7 @@ import com.gymity.project.model.Comment;
 import com.gymity.project.model.Gym;
 import com.gymity.project.model.Offer;
 import com.gymity.project.model.Users;
+import com.gymity.project.model.dto.OfferDto;
 import com.gymity.project.service.GymManagementService;
 import com.gymity.project.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,12 +88,25 @@ public class GymsController {
     }
 
     @GetMapping(value = "/{id}/offers")
-    public ResponseEntity<List<Offer>> getGymOffers(@PathVariable Long id) {
+    public ResponseEntity<List<OfferDto>> getGymOffers(@PathVariable Long id) {
         try {
-            List<Offer> offers = gymManagementService.getGymOffers(id);
+            List<OfferDto> offers = gymManagementService.getGymOffers(id);
             return ResponseEntity.status(HttpStatus.OK).body(offers);
         } catch (GymDoesNotExist gymDoesNotExist) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ArrayList<>());
         }
+    }
+
+
+    @PostMapping(value = "/{id}/comments")
+    public ResponseEntity<Comment> addCommentForGym(@PathVariable Long id, @RequestBody Comment comment) {
+        try {
+            Comment commentToSave = gymManagementService.addCommentForGym(id, comment);
+            return ResponseEntity.status(HttpStatus.OK).body(commentToSave);
+        } catch (UserDoesNotExist | GymDoesNotExist exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+
     }
 }
