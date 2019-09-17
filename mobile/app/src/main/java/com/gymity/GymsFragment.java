@@ -83,12 +83,12 @@ public class GymsFragment extends Fragment {
             }
         });
 
-        notificationsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new NotificationsFragment(), true);
-            }
-        });
+//        notificationsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ((NavigationHost) getActivity()).navigateTo(new NotificationsFragment(), true);
+//            }
+//        });
 
         myAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +126,7 @@ public class GymsFragment extends Fragment {
     private void setUpView(View view) {
         gymButton = view.findViewById(R.id.gyms_button);
         offersButton = view.findViewById(R.id.offers_button);
-        notificationsButton = view.findViewById(R.id.notifications_button);
+//        notificationsButton = view.findViewById(R.id.notifications_button);
         myAccountButton = view.findViewById(R.id.my_account_button);
         logoutButton = view.findViewById(R.id.logout_button);
     }

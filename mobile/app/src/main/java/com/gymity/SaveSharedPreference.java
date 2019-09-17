@@ -8,6 +8,8 @@ public class SaveSharedPreference {
     static final String PREF_USERNAME = "username";
     static final String PREF_IS_ADMIN = "is admin";
 
+    static final String GYM_ID = "gym_id";
+
     static SharedPreferences getSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
@@ -33,4 +35,15 @@ public class SaveSharedPreference {
         editor.clear();
         editor.commit();
     }
+
+    public static void setGymId(Context context, Long gymId) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putLong(GYM_ID, gymId);
+        editor.commit();
+    }
+
+    public static Long getGymId(Context context) {
+        return getSharedPreferences(context).getLong(GYM_ID, 0);
+    }
+
 }

@@ -3,6 +3,7 @@ package com.gymity.model;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -19,8 +20,13 @@ public class Users {
     @ColumnInfo
     public boolean isAdmin;
 
-    public Users(Credentials credentials, String fullName){
+    public Users(Credentials credentials, String fullName) {
         this.credentials = credentials;
         this.fullName = fullName;
+    }
+
+    @Ignore
+    public Users(Credentials credentials) {
+        this.credentials = credentials;
     }
 }

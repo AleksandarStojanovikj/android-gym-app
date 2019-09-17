@@ -37,17 +37,54 @@
                 android:id="@+id/recycler_view_offers"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="15dp"
+                android:scrollbars="horizontal"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:fadeScrollbars="false"/>
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_comments"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp" />
+                android:layout_height="200dp"
+                android:layout_marginTop="5dp"
+                />
 
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_comment"
+                style="@style/Widget.Shrine.TextInputLayout"
+                android:layout_width="250dp"
+                android:layout_height="70dp"
+                android:hint="@string/comment"
+                app:errorEnabled="true"
+                android:layout_marginRight="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_send"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="@string/send"
+                android:padding="6dp"
+                android:layout_toRightOf="@+id/text_input_comment"
+                android:layout_toEndOf="@+id/text_input_comment" />
+            </RelativeLayout>
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.appbar.AppBarLayout

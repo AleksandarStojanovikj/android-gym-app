@@ -15,12 +15,12 @@
         android:layout_height="wrap_content"
         android:text="@string/shr_offers" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/notifications_button"
-        style="@style/Widget.Shrine.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/shr_notifications" />
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/notifications_button"-->
+<!--        style="@style/Widget.Shrine.Button.TextButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/shr_notifications" />-->
 
     <View
         android:layout_width="56dp"

@@ -19,13 +19,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.gymity.adapters.CommentCardRecyclerViewAdapter;
 import com.gymity.adapters.OfferCardRecyclerViewAdapter;
+import com.gymity.admin.AdminProductGridFragment;
 import com.gymity.clients.GymApiClient;
 import com.gymity.model.Comment;
+import com.gymity.model.Credentials;
 import com.gymity.model.OfferDto;
+import com.gymity.model.Users;
 import com.gymity.repository.GymClient;
 
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -42,6 +48,10 @@ public class GymInfoFragment extends Fragment {
     private MaterialButton notificationsButton;
     private MaterialButton myAccountButton;
     private MaterialButton logoutButton;
+
+    private MaterialButton sendButton;
+    private TextInputLayout commentInput;
+    private TextInputEditText commentEditText;
 
     Long gymId;
 
@@ -81,12 +91,12 @@ public class GymInfoFragment extends Fragment {
             }
         });
 
-        notificationsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new NotificationsFragment(), true);
-            }
-        });
+//        notificationsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ((NavigationHost) getActivity()).navigateTo(new NotificationsFragment(), true);
+//            }
+//        });
 
         myAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +113,13 @@ public class GymInfoFragment extends Fragment {
             }
         });
 
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeApiCallForPostingCommentForGym(view);
+            }
+        });
+
         return view;
     }
 
@@ -116,12 +133,12 @@ public class GymInfoFragment extends Fragment {
                     gymOffers = response.body();
                     setUpRecyclerViewOffers(view);
                 } else
-                    Toast.makeText(getContext(), "No offers available", Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(), "No offers available", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<List<OfferDto>> call, Throwable t) {
-                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT);
+                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -134,14 +151,39 @@ public class GymInfoFragment extends Fragment {
             public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
                 if (response.code() >= 200 && response.code() < 300) {
                     gymComments = response.body();
+                    Collections.reverse(gymComments);
                     setUpRecyclerViewComments(view);
                 } else
-                    Toast.makeText(getContext(), "No comments available", Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(), "No comments available", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<List<Comment>> call, Throwable t) {
-                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT);
+                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void makeApiCallForPostingCommentForGym(final View view) {
+        gymClient = GymApiClient.getRetrofitInstance().create(GymClient.class);
+
+        final Comment comment = new Comment();
+        comment.setContent(commentEditText.getText().toString());
+        comment.setUser(new Users(new Credentials(SaveSharedPreference.getUsername(getActivity()), "")));
+
+        Call<Comment> call = gymClient.addCommentToGym(gymId, comment);
+        call.enqueue(new Callback<Comment>() {
+            @Override
+            public void onResponse(Call<Comment> call, Response<Comment> response) {
+                if (response.code() >= 200 && response.code() < 300) {
+                    ((NavigationHost) getActivity()).navigateTo(new GymInfoFragment(), false);
+                } else
+                    Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Comment> call, Throwable t) {
+                Toast.makeText(getContext(), "Something went wrong! Please try again later", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -164,10 +206,12 @@ public class GymInfoFragment extends Fragment {
     private void setUpView(View view) {
         gymButton = view.findViewById(R.id.gyms_button);
         offersButton = view.findViewById(R.id.offers_button);
-        notificationsButton = view.findViewById(R.id.notifications_button);
+//        notificationsButton = view.findViewById(R.id.notifications_button);
         myAccountButton = view.findViewById(R.id.my_account_button);
         logoutButton = view.findViewById(R.id.logout_button);
-
+        sendButton = view.findViewById(R.id.button_send);
+        commentInput = view.findViewById(R.id.text_input_comment);
+        commentEditText = view.findViewById(R.id.edit_text_comment);
     }
 
     public void setUpRecyclerViewOffers(View view) {
@@ -186,7 +230,7 @@ public class GymInfoFragment extends Fragment {
 
         CommentCardRecyclerViewAdapter adapter = new CommentCardRecyclerViewAdapter(gymComments);
         recyclerView.setAdapter(adapter);
-        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_staggered_product_grid_spacing_small);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_staggered_product_grid_spacing_extra_small);
         recyclerView.addItemDecoration(new ProductGridItemDecoration(smallPadding, smallPadding));
     }
 

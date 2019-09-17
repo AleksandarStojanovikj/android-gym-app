@@ -95,12 +95,12 @@ public class AdminUsersFragment extends Fragment {
             }
         });
 
-        notificationsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new AdminNotificationsFragment(), true);
-            }
-        });
+//        notificationsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ((NavigationHost) getActivity()).navigateTo(new AdminNotificationsFragment(), true);
+//            }
+//        });
 
         usersButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +137,7 @@ public class AdminUsersFragment extends Fragment {
     public void setView(View view) {
         gymButton = view.findViewById(R.id.gyms_button);
         offersButton = view.findViewById(R.id.offers_button);
-        notificationsButton = view.findViewById(R.id.notifications_button);
+//        notificationsButton = view.findViewById(R.id.notifications_button);
         usersButton = view.findViewById(R.id.users_button);
         logoutButton = view.findViewById(R.id.logout_button);
     }

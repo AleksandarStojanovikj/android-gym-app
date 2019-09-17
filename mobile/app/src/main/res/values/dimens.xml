@@ -9,6 +9,7 @@
     <!-- Dimens for staggered asymmetric grid layout cards-->
     <dimen name="shr_staggered_product_grid_spacing_large">30dp</dimen>
     <dimen name="shr_staggered_product_grid_spacing_small">26dp</dimen>
+    <dimen name="shr_staggered_product_grid_spacing_extra_small">10dp</dimen>
     <dimen name="shr_staggered_product_grid_margin_top_first">72dp</dimen>
     <dimen name="shr_staggered_product_grid_margin_top_second">56dp</dimen>
     <dimen name="shr_staggered_product_grid_margin_top_third">152dp</dimen>

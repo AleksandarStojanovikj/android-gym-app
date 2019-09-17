@@ -1,6 +1,7 @@
 package com.gymity.model;
 
 public class Gym {
+    public Long id;
     public String name;
     public String location;
 
